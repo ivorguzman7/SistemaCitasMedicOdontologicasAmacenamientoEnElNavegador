@@ -40,7 +40,9 @@ Una aplicación web cliente, estática y offline, para gestionar citas odontoló
 - Si añades nuevos elementos referenciados por `id`, registra la referencia al inicio de `app.js`.
 
 ## Contacto del autor
-Autor: Ívor Guzmán — PNF en Informática
+Autor: Ívor Guzmán | Estudiante del PNF de Informática
+Trallecto I  
+Universidad Politécnica Territorial 
+Agroindustrial del Estado Táchira  (UPTAIET)
+Sede San Cristobal, Estado Tachira, Venezuela
 
----
-Archivo generado automáticamente por el asistente para documentar el proyecto.
