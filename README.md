@@ -1,6 +1,6 @@
-# Sistema de Gestión Odontológica — MaterialCodigo
+# Sistema de Gestión Odontológica 
 
-Resumen y guía rápida para desarrolladores.
+Resumen y guía rápida.
 
 ## Qué es
 Una aplicación web cliente, estática y offline, para gestionar citas odontológicas: crear, listar, editar, eliminar, ver estadísticas y exportar datos a CSV.
