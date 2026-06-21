@@ -44,5 +44,5 @@ Autor: Ívor Guzmán | Estudiante del PNF de Informática
 Trallecto I  
 Universidad Politécnica Territorial 
 Agroindustrial del Estado Táchira  (UPTAIET)
-Sede San Cristobal, Estado Tachira, Venezuela
+Sede Central, Estado Tachira, Venezuela
 
