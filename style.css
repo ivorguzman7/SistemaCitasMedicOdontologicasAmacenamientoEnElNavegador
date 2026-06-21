@@ -1,0 +1,1250 @@
+/* ==========================================================================
+   SISTEMA DE GESTIÓN ODONTOLÓGICA - HOJA DE ESTILOS PREMIUM (style.css)
+   Diseñado para: Consultorio Odontológico Alicia J. Colmenares S.
+   Autor: PNF en Informática (Ivor Guzmán)
+   Estilo: Vanilla CSS con Variables de Diseño, Grid/Flexbox y Soporte Dark Mode
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+  DOCUMENTACIÓN PARA FUTUROS PROGRAMADORES
+
+  Formato: Para cada sección numerada (1..14) se indica:
+    - Qué hace: Resumen funcional breve.
+    - Cómo lo hace: Técnicas CSS principales usadas.
+    - Por qué lo hace: Razón de diseño / beneficios.
+
+  Objetivo: que cualquier desarrollador que abra este archivo entienda
+  rápidamente la intención, las dependencias (variables) y dónde extender
+  o modificar estilos sin romper el tema ni la accesibilidad.
+
+  Resumen rápido por sección:
+    1) VARIABLES DE DISEÑO
+      - Qué: Define tokens (colores, fuentes, radios, sombras y transiciones).
+      - Cómo: `:root { --variable: valor; }` para uso global.
+      - Por qué: Centralizar estilos y facilitar temas/responsive.
+
+    2) VARIANTE TEMA OSCURO
+      - Qué: Sobrescribe tokens para modo oscuro.
+      - Cómo: Selector `[data-theme="dark"]` redefiniendo las mismas variables.
+      - Por qué: Permite alternancia clara sin cambiar reglas individuales.
+
+    3) RESET & BASE
+      - Qué: Normaliza box model, tipografía y reglas base de `body`.
+      - Cómo: `* { box-sizing: border-box; }` y `body { background-color: var(--bg-primary); }`.
+      - Por qué: Consistencia entre navegadores y base para componentes.
+
+    4) HEADER & NAV
+      - Qué: Estilos para la cabecera, logo, título y controles (toggle, estado).
+      - Cómo: Flexbox, bordes, sombras y transiciones con variables.
+      - Por qué: Organización visual, accesibilidad y branding.
+
+    5) STATS WIDGETS
+      - Qué: Tarjetas de métricas adaptativas.
+      - Cómo: Grid responsivo, hover con `transform` y `box-shadow`.
+      - Por qué: Mostrar KPIs de forma compacta y clara.
+
+    6) LAYOUT PRINCIPAL
+      - Qué: Grid de dos columnas (sidebar + contenido) y responsive.
+      - Cómo: `grid-template-columns: 360px 1fr;` + media queries.
+      - Por qué: Mantener jerarquía y adaptabilidad.
+
+    7) FORMULARIOS
+      - Qué: Inputs, selects y validaciones visuales.
+      - Cómo: Padding para iconos, `:focus` con `box-shadow`, background-image SVG en selects.
+      - Por qué: UX consistente y foco/validación claro.
+
+    8) BÚSQUEDA Y ACCIONES
+      - Qué: Barra de filtros, búsqueda y botones de acción.
+      - Cómo: Flexbox, agrupación de botones y estilos de estado.
+      - Por qué: Agrupar controles relacionados y buena ergonomía.
+
+    9) LISTA DE CITAS
+      - Qué: Tarjetas de citas con indicadores por servicio.
+      - Cómo: Pseudo-elemento `::before` para barra lateral y clases `service-*`.
+      - Por qué: Identificación visual rápida del tipo de servicio.
+
+   10) MODALES
+      - Qué: Modal de edición con overlay y transiciones.
+      - Cómo: Overlay semitransparente, `.show` activa visibilidad y transformaciones.
+      - Por qué: Enfocar la interacción y proporcionar transiciones suaves.
+
+   11) TOASTS
+      - Qué: Notificaciones temporales (success/error/warning).
+      - Cómo: Contenedor fijo en la esquina, animación `toast-in` y variantes de color.
+      - Por qué: Retroalimentación no intrusiva de acciones.
+
+   12) DIALOGOS DE CONFIRMACIÓN
+      - Qué: Modal centrado para acciones destructivas.
+      - Cómo: Similar a modal principal, con layout de botones en grid.
+      - Por qué: Asegurar confirmación explícita del usuario.
+
+   13) FOOTER
+      - Qué: Pie con separación visual y texto secundario.
+      - Cómo: `border-top`, padding y color atenuado.
+      - Por qué: Información complementaria sin distraer.
+
+   14) EFECTOS Y RESPONSIVE
+      - Qué: Animaciones reutilizables y media queries para móviles.
+      - Cómo: `@keyframes` y `@media (max-width: ...)`.
+      - Por qué: Mejora experiencia visual y accesibilidad en distintos dispositivos.
+
+  Nota: Para modificar colores, actualiza las variables en `:root` y en
+  `[data-theme="dark"]`; la mayoría de las reglas usan esas variables.
+--------------------------------------------------------------------------- */
+
+/* --------------------------------------------------------------------------
+   1. DEFINICIÓN DE VARIABLES DE DISEÑO (Design Tokens)
+   -------------------------------------------------------------------------- */
+:root {
+  /* Fuentes */
+  --font-main: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* Paleta de Colores - Tema Claro (Por Defecto) */
+  --bg-primary: #f8fafc;
+  /* Slate 50 - Fondo general */
+  --bg-card: #ffffff;
+  /* Blanco puro - Fondo de contenedores */
+  --bg-header: #ffffff;
+  /* Blanco - Fondo de cabecera */
+  --border-color: #e2e8f0;
+  /* Slate 200 - Bordes sutiles */
+
+  --text-main: #0f172a;
+  /* Slate 900 - Texto principal */
+  --text-muted: #64748b;
+  /* Slate 500 - Texto secundario */
+  --text-light: #94a3b8;
+  /* Slate 400 - Texto de relleno / iconos */
+
+  /* Colores de Identidad (Odontología/Médico) */
+  --primary: #0d9488;
+  /* Teal 600 - Color de marca */
+  --primary-hover: #0f766e;
+  /* Teal 700 - Hover botones */
+  --primary-light: #f0fdfa;
+  /* Teal 50 - Fondo sutil */
+  --secondary: #0ea5e9;
+  /* Sky 500 - Elementos secundarios */
+  --secondary-hover: #0284c7;
+  /* Sky 600 */
+  --accent: #6366f1;
+  /* Indigo 500 - Resaltados */
+
+  /* Colores de Estado */
+  --success: #10b981;
+  /* Emerald 500 - Correcto/Completado */
+  --success-light: #ecfdf5;
+  /* Emerald 50 */
+  --warning: #f59e0b;
+  /* Amber 500 - Advertencia */
+  --warning-light: #fffbeb;
+  /* Amber 50 */
+  --error: #ef4444;
+  /* Red 500 - Cancelado/Error */
+  --error-light: #fef2f2;
+  /* Red 50 */
+
+  /* Colores Específicos para Badges de Servicios */
+  --badge-limpieza: #10b981;
+  /* Verde */
+  --badge-ortodoncia: #8b5cf6;
+  /* Morado */
+  --badge-extraccion: #f97316;
+  /* Naranja */
+  --badge-evaluacion: #3b82f6;
+  /* Azul */
+
+  /* Sombras y Elevaciones */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-primary: 0 10px 15px -3px rgba(13, 148, 136, 0.2);
+
+  /* Bordes Redondeados y Transiciones */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --------------------------------------------------------------------------
+   2. VARIANTES PARA EL TEMA OSCURO (Dark Mode)
+   -------------------------------------------------------------------------- */
+[data-theme="dark"] {
+  --bg-primary: #090d16;
+  /* Fondo oscuro profundo */
+  --bg-card: #111827;
+  /* Slate 900 - Tarjetas oscuras */
+  --bg-header: #111827;
+  --border-color: #1f2937;
+  /* Slate 800 - Bordes oscuros */
+
+  --text-main: #f3f4f6;
+  /* Gris claro para texto principal */
+  --text-muted: #9ca3af;
+  /* Gris medio para texto secundario */
+  --text-light: #6b7280;
+  /* Gris oscuro para texto secundario */
+
+  /* Colores de Identidad en Modo Oscuro */
+  --primary: #14b8a6;
+  /* Teal 500 (más brillante en fondo oscuro) */
+  --primary-hover: #2dd4bf;
+  /* Teal 400 */
+  --primary-light: rgba(20, 184, 166, 0.1);
+  --secondary: #38bdf8;
+  /* Sky 400 */
+  --secondary-hover: #7dd3fc;
+
+  /* Estados sutiles en modo oscuro */
+  --success-light: rgba(16, 185, 129, 0.1);
+  --warning-light: rgba(245, 158, 11, 0.1);
+  --error-light: rgba(239, 68, 68, 0.1);
+
+  /* Sombras oscuras */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+  --shadow-primary: 0 10px 15px -3px rgba(20, 184, 166, 0.15);
+}
+
+/* --------------------------------------------------------------------------
+   3. ESTILOS BASE Y RESET (Reset & Base Styles)
+   -------------------------------------------------------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--font-main);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  line-height: 1.5;
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Contenedor Principal */
+.app-container {
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 24px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* --------------------------------------------------------------------------
+   4. CABECERA PRINCIPAL (Header & Navigation)
+   -------------------------------------------------------------------------- */
+.main-header {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--shadow-sm);
+  transition: background-color var(--transition-normal), border-color var(--transition-normal);
+}
+
+.brand-section {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.logo-container {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  box-shadow: var(--shadow-primary);
+}
+
+.logo-container svg {
+  width: 28px;
+  height: 28px;
+}
+
+.header-title-group h1 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+}
+
+.header-title-group p {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.controls-section {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Indicador de Estado Fuera de Línea (Offline System Indicator) */
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background-color: var(--primary-light);
+  border: 1px solid rgba(13, 148, 136, 0.15);
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--primary);
+  border-radius: 50%;
+  position: relative;
+  display: inline-block;
+}
+
+.status-dot::after {
+  content: '';
+  width: 100%;
+  height: 100%;
+  background-color: var(--primary);
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: pulse-ring 1.8s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.5);
+    opacity: 1;
+  }
+
+  80%,
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+/* Botón de Alternancia de Tema */
+.theme-toggle {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-main);
+  transition: all var(--transition-fast);
+}
+
+.theme-toggle:hover {
+  background-color: var(--border-color);
+  transform: rotate(15deg);
+}
+
+.theme-toggle svg {
+  width: 20px;
+  height: 20px;
+}
+
+.theme-toggle .icon-sun {
+  display: none;
+}
+
+.theme-toggle .icon-moon {
+  display: block;
+}
+
+[data-theme="dark"] .theme-toggle .icon-sun {
+  display: block;
+}
+
+[data-theme="dark"] .theme-toggle .icon-moon {
+  display: none;
+}
+
+/* --------------------------------------------------------------------------
+   5. PANEL DE ESTADÍSTICAS (Dashboard Stats Widgets)
+   -------------------------------------------------------------------------- */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.stat-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1;
+}
+
+.stat-icon-wrapper {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-icon-wrapper svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Colores de Stats Cards */
+.stat-total {
+  color: var(--primary);
+  background-color: var(--primary-light);
+}
+
+.stat-hoy {
+  color: var(--secondary);
+  background-color: rgba(14, 165, 233, 0.1);
+}
+
+.stat-proximas {
+  color: var(--accent);
+  background-color: rgba(99, 102, 241, 0.1);
+}
+
+.stat-popular {
+  color: var(--warning);
+  background-color: var(--warning-light);
+}
+
+/* --------------------------------------------------------------------------
+   6. DISTRIBUCIÓN PRINCIPAL DE DOS COLUMNAS (Grid Layout)
+   -------------------------------------------------------------------------- */
+.main-grid {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 24px;
+  align-items: start;
+  flex-grow: 1;
+}
+
+@media (max-width: 992px) {
+  .main-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Contenedores de Paneles (Tarjetas Grandes) */
+.panel-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 12px;
+}
+
+.panel-header svg {
+  width: 22px;
+  height: 22px;
+  color: var(--primary);
+}
+
+.panel-header h2 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+/* --------------------------------------------------------------------------
+   7. FORMULARIO DE AGENDADO (Appointment Creation Form)
+   -------------------------------------------------------------------------- */
+.appointment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.input-container {
+  position: relative;
+}
+
+.input-container svg {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  color: var(--text-light);
+  pointer-events: none;
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px 12px 10px 38px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  font-size: 14px;
+  outline: none;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.form-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
+}
+
+/* Estilo para input select que no tiene iconos */
+select.form-input {
+  padding-left: 12px;
+  /* Sin icono a la izquierda */
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5' /%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+}
+
+[data-theme="dark"] select.form-input {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239ca3af' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5' /%3E%3C/svg%3E");
+}
+
+/* Mensajes de Validación Informativos bajo el Input */
+.validation-hint {
+  font-size: 11px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.validation-hint.warning {
+  color: var(--warning);
+}
+
+/* Botones del Formulario */
+.btn-primary {
+  width: 100%;
+  padding: 12px;
+  background-color: var(--primary);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-fast);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+  box-shadow: var(--shadow-primary);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-primary svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* --------------------------------------------------------------------------
+   8. BUSCADOR, FILTROS Y ACCIONES GLOBALES (Search & Export Tools)
+   -------------------------------------------------------------------------- */
+.filter-actions-bar {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.search-wrapper {
+  flex-grow: 1;
+  max-width: 400px;
+}
+
+.action-buttons-group {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-secondary {
+  padding: 10px 16px;
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all var(--transition-fast);
+}
+
+.btn-secondary:hover {
+  background-color: var(--border-color);
+}
+
+.btn-secondary svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Botón de Exportar (Estilo Verde Excel) */
+.btn-export {
+  border-color: rgba(16, 185, 129, 0.3);
+  color: var(--success);
+  background-color: var(--success-light);
+}
+
+.btn-export:hover {
+  background-color: var(--success);
+  color: #ffffff;
+  box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.15);
+}
+
+/* Botón Eliminar Todo (Estilo Advertencia) */
+.btn-danger-outline {
+  border-color: rgba(239, 68, 68, 0.3);
+  color: var(--error);
+  background-color: var(--error-light);
+}
+
+.btn-danger-outline:hover {
+  background-color: var(--error);
+  color: #ffffff;
+}
+
+/* --------------------------------------------------------------------------
+   9. TARJETAS DE CITAS REGISTRADAS (Appointments List & Cards)
+   -------------------------------------------------------------------------- */
+.appointments-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 200px;
+}
+
+.appointment-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-fast);
+  animation: slide-up 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.appointment-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 5px;
+  background-color: var(--primary);
+  /* Color por defecto */
+}
+
+/* Colores de borde izquierdo basados en el tipo de servicio */
+.appointment-card.service-limpieza::before {
+  background-color: var(--badge-limpieza);
+}
+
+.appointment-card.service-ortodoncia::before {
+  background-color: var(--badge-ortodoncia);
+}
+
+.appointment-card.service-extraccion::before {
+  background-color: var(--badge-extraccion);
+}
+
+.appointment-card.service-evaluacion::before {
+  background-color: var(--badge-evaluacion);
+}
+
+.appointment-card:hover {
+  transform: scale(1.008);
+  box-shadow: var(--shadow-md);
+  border-color: var(--text-light);
+}
+
+.card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.patient-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: -0.01em;
+}
+
+.card-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.detail-item svg {
+  width: 14px;
+  height: 14px;
+  color: var(--text-light);
+}
+
+/* Badges de Servicio */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  width: fit-content;
+}
+
+.badge-limpieza {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: var(--badge-limpieza);
+}
+
+.badge-ortodoncia {
+  background-color: rgba(139, 92, 246, 0.1);
+  color: var(--badge-ortodoncia);
+}
+
+.badge-extraccion {
+  background-color: rgba(249, 115, 22, 0.1);
+  color: var(--badge-extraccion);
+}
+
+.badge-evaluacion {
+  background-color: rgba(59, 130, 246, 0.1);
+  color: var(--badge-evaluacion);
+}
+
+/* Acciones de la Tarjeta */
+.card-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-icon {
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-primary);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: all var(--transition-fast);
+}
+
+.btn-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.btn-icon-edit:hover {
+  background-color: var(--primary-light);
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+.btn-icon-delete:hover {
+  background-color: var(--error-light);
+  color: var(--error);
+  border-color: var(--error);
+}
+
+/* Mensaje Vacío (No appointments state) */
+.empty-state {
+  text-align: center;
+  padding: 48px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  color: var(--text-muted);
+  border: 2px dashed var(--border-color);
+  border-radius: var(--radius-md);
+  background-color: rgba(248, 250, 252, 0.3);
+}
+
+.empty-state-icon {
+  width: 64px;
+  height: 64px;
+  background-color: var(--primary-light);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+}
+
+.empty-state-icon svg {
+  width: 32px;
+  height: 32px;
+}
+
+.empty-state h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.empty-state p {
+  font-size: 13px;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+/* --------------------------------------------------------------------------
+   10. MODAL DE EDICIÓN - CRUD UPDATE (Edit Appointment Modal)
+   -------------------------------------------------------------------------- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-normal);
+}
+
+.modal-overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-container {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  width: 90%;
+  max-width: 460px;
+  padding: 24px;
+  box-shadow: var(--shadow-lg);
+  transform: translateY(20px) scale(0.95);
+  transition: transform var(--transition-normal);
+}
+
+.modal-overlay.show .modal-container {
+  transform: translateY(0) scale(1);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 14px;
+  margin-bottom: 20px;
+}
+
+.modal-header h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.modal-header h3 svg {
+  width: 20px;
+  height: 20px;
+  color: var(--primary);
+}
+
+.btn-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  transition: background-color var(--transition-fast);
+}
+
+.btn-close:hover {
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+}
+
+.modal-footer {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* --------------------------------------------------------------------------
+   11. SISTEMA DE TOAST NOTIFICATIONS (Toasts Utility)
+   -------------------------------------------------------------------------- */
+.toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 2000;
+  pointer-events: none;
+}
+
+.toast {
+  pointer-events: auto;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-left: 4px solid var(--primary);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 280px;
+  max-width: 400px;
+  animation: toast-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transition: all var(--transition-fast);
+}
+
+.toast-message {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.toast-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toast-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Modificaciones de Toasts */
+.toast-success {
+  border-left-color: var(--success);
+}
+
+.toast-success .toast-icon {
+  color: var(--success);
+}
+
+.toast-error {
+  border-left-color: var(--error);
+}
+
+.toast-error .toast-icon {
+  color: var(--error);
+}
+
+.toast-warning {
+  border-left-color: var(--warning);
+}
+
+.toast-warning .toast-icon {
+  color: var(--warning);
+}
+
+@keyframes toast-in {
+  from {
+    transform: translateY(20px) scale(0.9);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+.toast.dismissing {
+  opacity: 0;
+  transform: translateX(100px);
+}
+
+/* --------------------------------------------------------------------------
+   12. DIALOGO DE CONFIRMACIÓN PERSONALIZADO (Custom Confirm Modal)
+   -------------------------------------------------------------------------- */
+.confirm-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1500;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-normal);
+}
+
+.confirm-modal-overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.confirm-container {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  width: 90%;
+  max-width: 380px;
+  padding: 20px;
+  box-shadow: var(--shadow-lg);
+  transform: translateY(20px) scale(0.95);
+  transition: transform var(--transition-normal);
+  text-align: center;
+}
+
+.confirm-modal-overlay.show .confirm-container {
+  transform: translateY(0) scale(1);
+}
+
+.confirm-icon-box {
+  width: 48px;
+  height: 48px;
+  background-color: var(--error-light);
+  color: var(--error);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px auto;
+}
+
+.confirm-icon-box svg {
+  width: 24px;
+  height: 24px;
+}
+
+.confirm-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 8px;
+}
+
+.confirm-text {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+.confirm-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.btn-danger {
+  background-color: var(--error);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.btn-danger:hover {
+  background-color: #dc2626;
+}
+
+/* --------------------------------------------------------------------------
+   13. PIE DE PÁGINA (Footer)
+   -------------------------------------------------------------------------- */
+.main-footer {
+  border-top: 1px solid var(--border-color);
+  padding: 16px 24px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-muted);
+  background-color: var(--bg-card);
+  margin-top: auto;
+  transition: background-color var(--transition-normal), border-color var(--transition-normal);
+}
+
+/* --------------------------------------------------------------------------
+   14. EFECTOS ADICIONALES Y TRANSICIONES (Transitions & Animations)
+   -------------------------------------------------------------------------- */
+@keyframes slide-up {
+  from {
+    transform: translateY(12px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Adaptabilidad para pantallas muy pequeñas */
+@media (max-width: 576px) {
+  .app-container {
+    padding: 12px;
+  }
+
+  .main-header {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .controls-section {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .action-buttons-group {
+    width: 100%;
+  }
+
+  .action-buttons-group .btn-secondary {
+    flex-grow: 1;
+    justify-content: center;
+  }
+
+  .modal-footer {
+    grid-template-columns: 1fr;
+  }
+
+  .confirm-actions {
+    grid-template-columns: 1fr;
+  }
+}
