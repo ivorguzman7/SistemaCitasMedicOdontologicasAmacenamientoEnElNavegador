@@ -20,7 +20,7 @@
  * 
  * APIS DE NAVEGADOR (Browser APIs) EXPLICADAS:
  * 1. Web Storage API (localStorage): Permite almacenar pares clave-valor en el navegador.
- *    Los datos persisten tras cerrar la pestaña o apagar el computador (offline capability).
+ *    Los datos persisten tras cerrar la pestaña, el navegador o apagar el computador (offline capability).
  * 2. DOM API (Document Object Model): Permite seleccionar, crear, modificar e inyectar
  *    nodos de HTML reactivamente en respuesta a eventos del usuario.
  * 3. Blob API (Binary Large Object) y URL API: Permiten construir un archivo binario/texto
@@ -29,7 +29,7 @@
  * ==========================================================================
  */
 /* --------------------------------------------------------------------------
-   DOCUMENTACIÓN DE ESTUDIO Y ANÁLISIS (Resumen para desarrolladores)
+   DOCUMENTACIÓN DE ESTUDIO Y ANÁLISIS 
 
    Qué es:
      - Lógica de negocio y persistencia para la gestión de citas del sistema.

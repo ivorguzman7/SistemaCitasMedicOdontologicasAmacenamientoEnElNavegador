@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Documentación completa del JavaScript (app.js) del Sistema de Gestión Odontológica - Dra. Alicia J. Colmenares S.">
+    <meta name="author" content="Ivor Alexander Guzmán Z.">
+    <title>Documentación JavaScript (app.js) - Sistema de Gestión Odontológica</title>
+    <style>
+        :root {
+            --primary: #0d9488;
+            --primary-dark: #0f766e;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --code-bg: #f1f5f9;
+            --tag-color: #c2410c;
+            --attr-color: #0369a1;
+            --value-color: #15803d;
+            --func-color: #7c3aed;
+            --var-color: #be185d;
+            --comment-color: #94a3b8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header-doc {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(13, 148, 136, 0.2);
+        }
+
+        .header-doc h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .header-doc p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .section-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 24px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .section-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        }
+
+        .section-header {
+            background: linear-gradient(90deg, #f0fdfa 0%, #ffffff 100%);
+            padding: 20px 24px;
+            border-bottom: 2px solid var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .tag-badge {
+            background: var(--primary);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .section-body {
+            padding: 24px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 12px 16px;
+            margin-bottom: 16px;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-align: right;
+            padding-top: 2px;
+        }
+
+        .info-value {
+            color: var(--text);
+        }
+
+        .code-block {
+            background: var(--code-bg);
+            border-radius: 8px;
+            padding: 16px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            overflow-x: auto;
+            border-left: 4px solid var(--primary);
+            margin: 12px 0;
+            line-height: 1.5;
+        }
+
+        .tag-name { color: var(--tag-color); font-weight: bold; }
+        .attr-name { color: var(--attr-color); }
+        .attr-value { color: var(--value-color); }
+        .func-name { color: var(--func-color); font-weight: bold; }
+        .var-name { color: var(--var-color); font-weight: bold; }
+        .comment { color: var(--comment-color); font-style: italic; }
+        .keyword { color: #d97706; font-weight: bold; }
+        .string { color: var(--value-color); }
+        .number { color: #2563eb; }
+
+        .highlight-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 12px 16px;
+            border-radius: 0 8px 8px 0;
+            margin: 12px 0;
+            font-size: 0.95rem;
+        }
+
+        .category-divider {
+            text-align: center;
+            margin: 40px 0 30px;
+            position: relative;
+        }
+
+        .category-divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+        }
+
+        .category-divider h2 {
+            display: inline-block;
+            background: var(--bg);
+            padding: 0 24px;
+            position: relative;
+            color: var(--primary);
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        .toc {
+            background: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            padding: 24px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .toc h2 {
+            font-size: 1.2rem;
+            margin-bottom: 16px;
+            color: var(--primary);
+        }
+
+        .toc ul {
+            list-style: none;
+            columns: 2;
+            column-gap: 24px;
+        }
+
+        .toc li {
+            margin-bottom: 8px;
+            break-inside: avoid;
+        }
+
+        .toc a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .toc a:hover {
+            background: #f0fdfa;
+            color: var(--primary);
+        }
+
+        .toc .tag-mini {
+            font-family: monospace;
+            background: #e0f2fe;
+            color: var(--attr-color);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .signature {
+            color: var(--func-color);
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            background: #faf5ff;
+            padding: 8px 12px;
+            border-radius: 6px;
+            display: inline-block;
+            margin-bottom: 12px;
+            border: 1px solid #e9d5ff;
+        }
+
+        @media (max-width: 768px) {
+            .toc ul { columns: 1; }
+            .info-grid { grid-template-columns: 1fr; gap: 4px; }
+            .info-label { text-align: left; }
+            .section-header { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-doc">
+            <h1>📋 Documentación Completa del JavaScript (app.js)</h1>
+            <p>Sistema de Gestión Odontológica — Dra. Alicia J. Colmenares S.</p>
+            <p style="font-size: 0.9rem; margin-top: 8px; opacity: 0.8;">Con títulos de sección para cada variable, función y módulo del archivo app.js</p>
+        </div>
+
+        <div class="toc">
+            <h2>📑 Tabla de Contenidos</h2>
+            <ul>
+                <li><a href="#state"><span class="tag-mini">state</span> Objeto de Estado Unificado</a></li>
+                <li><a href="#dom-refs"><span class="tag-mini">DOM Refs</span> Referencias a Elementos del DOM</a></li>
+                <li><a href="#init"><span class="tag-mini">DOMContentLoaded</span> Punto de Entrada de la App</a></li>
+                <li><a href="#establecer-limite"><span class="tag-mini">establecerLimiteFechaMinima()</span> Fecha Mínima en Inputs</a></li>
+                <li><a href="#tema"><span class="tag-mini">inicializarTemaClaroOscuro()</span> Tema Visual</a></li>
+                <li><a href="#cargar-citas"><span class="tag-mini">cargarCitasDesdeAlmacenamiento()</span> Cargar localStorage</a></li>
+                <li><a href="#guardar-citas"><span class="tag-mini">guardarCitasEnAlmacenamiento()</span> Guardar localStorage</a></li>
+                <li><a href="#renderizar"><span class="tag-mini">renderizarInterfaz()</span> Pipeline de Renderizado</a></li>
+                <li><a href="#filtrar"><span class="tag-mini">filtrarCitasActualmente()</span> Filtrar por Búsqueda</a></li>
+                <li><a href="#ordenar"><span class="tag-mini">ordenarCitasCronologicamente()</span> Ordenar Citas</a></li>
+                <li><a href="#render-tarjetas"><span class="tag-mini">renderizarTarjetasCita()</span> Inyectar Tarjetas</a></li>
+                <li><a href="#estadisticas"><span class="tag-mini">actualizarEstadisticasDashboard()</span> Estadísticas</a></li>
+                <li><a href="#create"><span class="tag-mini">submit #cita-form</span> Crear Cita (CREATE)</a></li>
+                <li><a href="#input-fecha-listener"><span class="tag-mini">input #fecha</span> Validación Proactiva de Fecha</a></li>
+                <li><a href="#abrir-modal"><span class="tag-mini">abrirModalEdicion()</span> Abrir Modal de Edición</a></li>
+                <li><a href="#cerrar-modal"><span class="tag-mini">cerrarModalEdicion()</span> Cerrar Modal de Edición</a></li>
+                <li><a href="#edit-fecha-listener"><span class="tag-mini">input #edit-fecha</span> Validación Fecha Edición</a></li>
+                <li><a href="#update"><span class="tag-mini">submit #edit-form</span> Actualizar Cita (UPDATE)</a></li>
+                <li><a href="#solicitar-eliminar"><span class="tag-mini">solicitarEliminarCita()</span> Solicitar Eliminación</a></li>
+                <li><a href="#confirmar-eliminar"><span class="tag-mini">click #btn-confirm-accept</span> Confirmar Eliminación</a></li>
+                <li><a href="#cancelar-confirm"><span class="tag-mini">click #btn-confirm-cancel</span> Cancelar Confirmación</a></li>
+                <li><a href="#limpiar-todo"><span class="tag-mini">click #btn-limpiar-todo</span> Limpiar Todas las Citas</a></li>
+                <li><a href="#buscar"><span class="tag-mini">input #buscador</span> Búsqueda en Tiempo Real</a></li>
+                <li><a href="#exportar"><span class="tag-mini">click #exportar-btn</span> Exportar CSV</a></li>
+                <li><a href="#fecha-hoy"><span class="tag-mini">obtenerFechaHoyLocal()</span> Fecha Actual Local</a></li>
+                <li><a href="#formatear-fecha"><span class="tag-mini">formatearFechaEspanol()</span> Formatear Fecha</a></li>
+                <li><a href="#formatear-hora"><span class="tag-mini">formatearHora12()</span> Formatear Hora 12h</a></li>
+                <li><a href="#escapar-html"><span class="tag-mini">escaparHTML()</span> Sanitización XSS</a></li>
+                <li><a href="#escapar-js"><span class="tag-mini">escaparJS()</span> Escapar Comillas JS</a></li>
+                <li><a href="#toast"><span class="tag-mini">mostrarToast()</span> Notificaciones Flotantes</a></li>
+            </ul>
+        </div>
+
+        <!-- ==================== CATEGORÍA 1: ESTADO Y DOM ==================== -->
+        <div class="category-divider"><h2>🏗️ ESTADO UNIFICADO Y REFERENCIAS AL DOM</h2></div>
+
+        <!-- STATE -->
+        <div class="section-card" id="state">
+            <div class="section-header">
+                <span class="tag-badge">const state</span>
+                <span class="section-title">Objeto de Estado Unificado de la Aplicación</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Es el <strong>Single State Tree</strong> (Árbol de Estado Único) de la aplicación. Contiene toda la información que la app necesita para funcionar: citas, filtros y flags de UI.</div>
+
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Declarado en la sección I, al inicio del archivo, después del bloque de comentarios de documentación.</div>
+
+                    <div class="info-label">Propiedades</div>
+                    <div class="info-value">
+                        <ul style="margin-left: 16px;">
+                            <li><span class="var-name">citas</span>: Array[] — Lista de objetos cita {id, paciente, servicio, fecha, hora}</li>
+                            <li><span class="var-name">filtroBusqueda</span>: String — Texto del buscador para filtrar pacientes</li>
+                            <li><span class="var-name">idCitaParaEliminar</span>: Number|null — ID de la cita en proceso de eliminación</li>
+                            <li><span class="var-name">tipoDeLimpieza</span>: String — 'citas' (limpiar todo) o 'cita' (eliminar una)</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Centralizar el estado evita inconsistencias. Cualquier cambio en <span class="var-name">state.citas</span> dispara un renderizado completo, garantizando que la UI siempre refleje los datos reales.</div>
+
+                    <div class="info-label">Patrón</div>
+                    <div class="info-value">Single State Tree + Observer-like Update Pattern. La UI reacciona y se repinta ante cambios en el estado.</div>
+                </div>
+                <div class="code-block">
+<span class="keyword">const</span> <span class="var-name">state</span> = {
+  <span class="var-name">citas</span>: [],
+  <span class="var-name">filtroBusqueda</span>: <span class="string">''</span>,
+  <span class="var-name">idCitaParaEliminar</span>: <span class="keyword">null</span>,
+  <span class="var-name">tipoDeLimpieza</span>: <span class="string">'cita'</span>
+};
+                </div>
+            </div>
+        </div>
+
+        <!-- DOM REFERENCES -->
+        <div class="section-card" id="dom-refs">
+            <div class="section-header">
+                <span class="tag-badge">DOM Refs</span>
+                <span class="section-title">Referencias a Elementos del DOM (Cacheo de Selectores)</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Cachea (guarda en memoria) todas las referencias a elementos del DOM que el JavaScript necesita manipular. Evita llamar repetidamente a <span class="func-name">document.getElementById()</span> en cada función.</div>
+
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Sección I, justo después del objeto <span class="var-name">state</span>. Se organizan por áreas funcionales.</div>
+
+                    <div class="info-label">Grupos</div>
+                    <div class="info-value">
+                        <ul style="margin-left: 16px;">
+                            <li><strong>Formulario Creación:</strong> <span class="var-name">formularioCita</span>, <span class="var-name">inputPaciente</span>, <span class="var-name">inputServicio</span>, <span class="var-name">inputFecha</span>, <span class="var-name">inputHora</span>, <span class="var-name">alertaFechaFinSemana</span></li>
+                            <li><strong>Dashboard:</strong> <span class="var-name">statTotalValor</span>, <span class="var-name">statHoyValor</span>, <span class="var-name">statProximaValor</span>, <span class="var-name">statPopularValor</span></li>
+                            <li><strong>Búsqueda y Lista:</strong> <span class="var-name">inputBuscador</span>, <span class="var-name">botonExportar</span>, <span class="var-name">botonLimpiarTodo</span>, <span class="var-name">contenedorListaCitas</span></li>
+                            <li><strong>Modal Edición:</strong> <span class="var-name">modalEdicionOverlay</span>, <span class="var-name">formularioEdicion</span>, <span class="var-name">inputEditId</span>, <span class="var-name">inputEditPaciente</span>, <span class="var-name">inputEditServicio</span>, <span class="var-name">inputEditFecha</span>, <span class="var-name">inputEditHora</span>, <span class="var-name">alertaEditFechaFinSemana</span>, <span class="var-name">botonCerrarModal</span>, <span class="var-name">botonCancelarModal</span></li>
+                            <li><strong>Confirmación:</strong> <span class="var-name">modalConfirmacionOverlay</span>, <span class="var-name">tituloConfirmacion</span>, <span class="var-name">descripcionConfirmacion</span>, <span class="var-name">botonAceptarConfirmacion</span>, <span class="var-name">botonCancelarConfirmacion</span></li>
+                            <li><strong>Toasts y Tema:</strong> <span class="var-name">contenedorToasts</span>, <span class="var-name">botonAlternarTema</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Optimización de rendimiento. <span class="func-name">getElementById</span> es rápido pero repetirlo en cada render es innecesario. Cachear las referencias es una práctica estándar en apps state-driven.</div>
+                </div>
+                <div class="code-block">
+<span class="comment">// Formulario de Creación (CREATE)</span>
+<span class="keyword">const</span> <span class="var-name">formularioCita</span> = <span class="func-name">document.getElementById</span>(<span class="string">'cita-form'</span>);
+<span class="keyword">const</span> <span class="var-name">inputPaciente</span> = <span class="func-name">document.getElementById</span>(<span class="string">'paciente'</span>);
+<span class="comment">// ... y 20+ referencias más organizadas por áreas</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== CATEGORÍA 2: INICIALIZACIÓN ==================== -->
+        <div class="category-divider"><h2>⚡ INICIALIZACIÓN DE LA APLICACIÓN</h2></div>
+
+        <!-- DOMContentLoaded -->
+        <div class="section-card" id="init">
+            <div class="section-header">
+                <span class="tag-badge">DOMContentLoaded</span>
+                <span class="section-title">Punto de Entrada Principal (App Bootstrapping)</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Es el <strong>Main Entry Point</strong> de la aplicación. Se ejecuta cuando el navegador ha cargado y analizado completamente el HTML inicial.</div>
+
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Sección II, registrado como listener del evento <span class="func-name">document.addEventListener('DOMContentLoaded', ...)</span>.</div>
+
+                    <div class="info-label">Flujo de inicialización</div>
+                    <div class="info-value">
+                        <ol style="margin-left: 16px;">
+                            <li>Inicializa tema visual (claro/oscuro)</li>
+                            <li>Carga citas desde localStorage al estado</li>
+                            <li>Establece fecha mínima en los inputs de fecha</li>
+                            <li>Renderiza la interfaz por primera vez</li>
+                            <li>Muestra toast de bienvenida "Sistema listo y operando 100% fuera de línea"</li>
+                        </ol>
+                    </div>
+
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Garantiza que el DOM esté listo antes de manipularlo. Evita errores de elementos no encontrados.</div>
+
+                    <div class="info-label">API del Navegador</div>
+                    <div class="info-value"><span class="func-name">document.addEventListener()</span> — Registra un callback que se ejecuta cuando el evento DOMContentLoaded se dispara.</div>
+                </div>
+                <div class="code-block">
+<span class="func-name">document.addEventListener</span>(<span class="string">'DOMContentLoaded'</span>, () => {
+  <span class="func-name">inicializarTemaClaroOscuro</span>();
+  <span class="func-name">cargarCitasDesdeAlmacenamiento</span>();
+  <span class="func-name">establecerLimiteFechaMinima</span>();
+  <span class="func-name">renderizarInterfaz</span>();
+  <span class="func-name">mostrarToast</span>(<span class="string">'Sistema listo y operando 100% fuera de línea.'</span>, <span class="string">'success'</span>);
+});
+                </div>
+            </div>
+        </div>
+
+        <!-- establecerLimiteFechaMinima -->
+        <div class="section-card" id="establecer-limite">
+            <div class="section-header">
+                <span class="tag-badge">establecerLimiteFechaMinima()</span>
+                <span class="section-title">Establecer Fecha Mínima en los Inputs de Fecha</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Calcula la fecha actual en formato local AAAA-MM-DD y la asigna como propiedad <span class="attr-name">min</span> de los inputs de fecha (creación y edición). Esto deshabilita fechas pasadas en el selector nativo.</div>
+
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Sección II. Llamada desde el punto de entrada.</div>
+
+                    <div class="info-label">Lógica clave</div>
+                    <div class="info-value">Usa <span class="func-name">new Date()</span> + <span class="func-name">getFullYear()</span>, <span class="func-name">getMonth()</span> (0-11), <span class="func-name">getDate()</span> + <span class="func-name">String(...).padStart(2, '0')</span> para formatear correctamente sin problemas de huso horario UTC.</div>
+
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Evita que el usuario agende citas en fechas pasadas. Usa el huso horario local para no restar un día por desfase UTC.</div>
+
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Modifica <span class="var-name">inputFecha.min</span> y <span class="var-name">inputEditFecha.min</span>.</div>
+                </div>
+                <div class="code-block">
+<span class="keyword">function</span> <span class="func-name">establecerLimiteFechaMinima</span>() {
+  <span class="keyword">const</span> hoy = <span class="keyword">new</span> <span class="func-name">Date</span>();
+  <span class="keyword">const</span> anio = hoy.<span class="func-name">getFullYear</span>();
+  <span class="keyword">const</span> mes = <span class="func-name">String</span>(hoy.<span class="func-name">getMonth</span>() + <span class="number">1</span>).<span class="func-name">padStart</span>(<span class="number">2</span>, <span class="string">'0'</span>);
+  <span class="keyword">const</span> dia = <span class="func-name">String</span>(hoy.<span class="func-name">getDate</span>()).<span class="func-name">padStart</span>(<span class="number">2</span>, <span class="string">'0'</span>);
+  <span class="keyword">const</span> fechaMinima = <span class="string">`${anio}-${mes}-${dia}`</span>;
+  inputFecha.<span class="attr-name">min</span> = fechaMinima;
+  inputEditFecha.<span class="attr-name">min</span> = fechaMinima;
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== CATEGORÍA 3: TEMA VISUAL ==================== -->
+        <div class="category-divider"><h2>🌗 CONTROL DEL TEMA VISUAL</h2></div>
+
+        <!-- inicializarTemaClaroOscuro -->
+        <div class="section-card" id="tema">
+            <div class="section-header">
+                <span class="tag-badge">inicializarTemaClaroOscuro()</span>
+                <span class="section-title">Inicializar y Alternar Tema Claro/Oscuro</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Lee la preferencia de tema desde localStorage. Si no existe, detecta la preferencia del sistema operativo mediante <span class="func-name">window.matchMedia()</span> y aplica el tema al elemento raíz <span class="tag-name">&lt;html&gt;</span>.</div>
+
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Sección III. Llamada en el punto de entrada y en el listener del botón de tema.</div>
+
+                    <div class="info-label">APIs utilizadas</div>
+                    <div class="info-value">
+                        <ul style="margin-left: 16px;">
+                            <li><span class="func-name">localStorage.getItem()</span> — Lee preferencia guardada</li>
+                            <li><span class="func-name">window.matchMedia('(prefers-color-scheme: dark)')</span> — Detecta preferencia del SO</li>
+                            <li><span class="func-name">document.documentElement.setAttribute()</span> — Aplica tema al &lt;html&gt;</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Persiste la preferencia del usuario entre sesiones. Respeta la configuración del sistema operativo como fallback.</div>
+
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">El botón <span class="var-name">botonAlternarTema</span> tiene un listener que invierte el tema actual y lo persiste.</div>
+                </div>
+                <div class="code-block">
+<span class="keyword">function</span> <span class="func-name">inicializarTemaClaroOscuro</span>() {
+  <span class="keyword">const</span> temaGuardado = <span class="func-name">localStorage.getItem</span>(<span class="string">'odontologia-tema'</span>);
+  <span class="keyword">if</span> (temaGuardado) {
+    <span class="func-name">document.documentElement.setAttribute</span>(<span class="string">'data-theme'</span>, temaGuardado);
+  } <span class="keyword">else</span> {
+    <span class="keyword">const</span> prefiereOscuro = <span class="func-name">window.matchMedia</span>(<span class="string">'(prefers-color-scheme: dark)'</span>).<span class="attr-name">matches</span>;
+    <span class="keyword">const</span> tema = prefiereOscuro ? <span class="string">'dark'</span> : <span class="string">'light'</span>;
+    <span class="func-name">document.documentElement.setAttribute</span>(<span class="string">'data-theme'</span>, tema);
+    <span class="func-name">localStorage.setItem</span>(<span class="string">'odontologia-tema'</span>, tema);
+  }
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== CATEGORÍA 4: PERSISTENCIA ==================== -->
+        <div class="category-divider"><h2>💾 PERSISTENCIA DE DATOS (LocalStorage)</h2></div>
+
+        <!-- cargarCitasDesdeAlmacenamiento -->
+        <div class="section-card" id="cargar-citas">
+            <div class="section-header">
+                <span class="tag-badge">cargarCitasDesdeAlmacenamiento()</span>
+                <span class="section-title">Cargar Citas desde localStorage al Estado</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Lee la clave <span class="string">'odontologia-citas'</span> del localStorage, parsea el JSON y lo asigna a <span class="var-name">state.citas</span>. Si no hay datos o el JSON está corrupto, inicializa un array vacío.</div>
+
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Sección IV. Llamada en el punto de entrada.</div>
+
+                    <div class="info-label">Manejo de errores</div>
+                    <div class="info-value">Usa <span class="keyword">try/catch</span> para capturar errores de parsing JSON. Si los datos están corruptos, muestra un toast de error y limpia el almacenamiento.</div>
+
+                    <div class="info-label">APIs utilizadas</div>
+                    <div class="info-value"><span class="func-name">localStorage.getItem()</span> — Lectura; <span class="func-name">JSON.parse()</span> — Deserialización; <span class="func-name">JSON.stringify()</span> — Serialización (en guardar).</div>
+
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Permite que las citas persistan tras cerrar el navegador. Funciona 100% offline sin servidor.</div>
+                </div>
+                <div class="code-block">
+<span class="keyword">function</span> <span class="func-name">cargarCitasDesdeAlmacenamiento</span>() {
+  <span class="keyword">try</span> {
+    <span class="keyword">const</span> rawData = <span class="func-name">localStorage.getItem</span>(<span class="string">'odontologia-citas'</span>);
+    state.<span class="var-name">citas</span> = rawData ? <span class="func-name">JSON.parse</span>(rawData) : [];
+  } <span class="keyword">catch</span> (error) {
+    <span class="func-name">console.error</span>(<span class="string">"Error al analizar datos:"</span>, error);
+    <span class="func-name">mostrarToast</span>(<span class="string">"Error al cargar citas corruptas. Base limpia."</span>, <span class="string">"error"</span>);
+    state.<span class="var-name">citas</span> = [];
+    <span class="func-name">guardarCitasEnAlmacenamiento</span>();
+  }
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- guardarCitasEnAlmacenamiento -->
+        <div class="section-card" id="guardar-citas">
+            <div class="section-header">
+                <span class="tag-badge">guardarCitasEnAlmacenamiento()</span>
+                <span class="section-title">Guardar Citas del Estado en localStorage</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Serializa <span class="var-name">state.citas</span> a JSON y lo guarda en localStorage bajo la clave <span class="string">'odontologia-citas'</span>.</div>
+
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Sección IV. Llamada después de cada operación CRUD (crear, editar, eliminar).</div>
+
+                    <div class="info-label">Manejo de errores</div>
+                    <div class="info-value">Captura errores de escritura (ej. almacenamiento lleno) y muestra toast informativo.</div>
+
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Garantiza que cualquier cambio en el estado se persista inmediatamente. Es la capa de persistencia de la app.</div>
+                </div>
+                <div class="code-block">
+<span class="keyword">function</span> <span class="func-name">guardarCitasEnAlmacenamiento</span>() {
+  <span class="keyword">try</span> {
+    <span class="keyword">const</span> dataString = <span class="func-name">JSON.stringify</span>(state.<span class="var-name">citas</span>);
+    <span class="func-name">localStorage.setItem</span>(<span class="string">'odontologia-citas'</span>, dataString);
+  } <span class="keyword">catch</span> (error) {
+    <span class="func-name">console.error</span>(<span class="string">"Error al escribir datos:"</span>, error);
+    <span class="func-name">mostrarToast</span>(<span class="string">"No se pudo guardar. Espacio lleno."</span>, <span class="string">"error"</span>);
+  }
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== CATEGORÍA 5: RENDERIZADO ==================== -->
+        <div class="category-divider"><h2>🎨 RENDERIZADO Y DASHBOARD</h2></div>
+
+        <!-- renderizarInterfaz -->
+        <div class="section-card" id="renderizar">
+            <div class="section-header">
+                <span class="tag-badge">renderizarInterfaz()</span>
+                <span class="section-title">Pipeline Central de Renderizado (Central Render Pipeline)</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Es la función principal de renderizado. Limpia y reconstruye el listado de citas y actualiza los indicadores del dashboard. Actúa como el "motor" de la UI.</div>
+
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Sección V. Llamada después de cada modificación del estado (CRUD, búsqueda).</div>
+
+                    <div class="info-label">Pasos del pipeline</div>
+                    <div class="info-value">
+                        <ol style="margin-left: 16px;">
+                            <li><span class="func-name">filtrarCitasActualmente()</span> — Filtra según búsqueda</li>
+                            <li><span class="func-name">ordenarCitasCronologicamente()</span> — Ordena fecha/hora ascendente</li>
+                            <li><span class="func-name">renderizarTarjetasCita()</span> — Inyecta tarjetas en el DOM</li>
+                            <li><span class="func-name">actualizarEstadisticasDashboard()</span> — Actualiza métricas</li>
+                        </ol>
+                    </div>
+
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Un único punto de renderizado garantiza consistencia. No importa qué operación modifique el estado, la UI siempre se repinta correctamente.</div>
+                </div>
+                <div class="code-block">
+<span class="keyword">function</span> <span class="func-name">renderizarInterfaz</span>() {
+  <span class="keyword">const</span> citasFiltradas = <span class="func-name">filtrarCitasActualmente</span>();
+  <span class="func-name">ordenarCitasCronologicamente</span>(citasFiltradas);
+  <span class="func-name">renderizarTarjetasCita</span>(citasFiltradas);
+  <span class="func-name">actualizarEstadisticasDashboard</span>();
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- filtrarCitasActualmente -->
+        <div class="section-card" id="filtrar">
+            <div class="section-header">
+                <span class="tag-badge">filtrarCitasActualmente()</span>
+                <span class="section-title">Filtrar Citas según el Buscador (Live Filter)</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Filtra el array <span class="var-name">state.citas</span> comparando el nombre del paciente con el texto de <span class="var-name">state.filtroBusqueda</span>. La comparación es insensible a mayúsculas/minúsculas.</div>
+
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Sección V. Llamada dentro de <span class="func-name">renderizarInterfaz()</span>.</div>
+
+                    <div class="info-label">Retorno</div>
+                    <div class="info-value">Array de citas filtradas (copia con spread <span class="keyword">[...state.citas]</span> si no hay búsqueda).</div>
+
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">La búsqueda en tiempo real permite encontrar citas rápidamente sin recargar la página.</div>
+                </div>
+                <div class="code-block">
+<span class="keyword">function</span> <span class="func-name">filtrarCitasActualmente</span>() {
+  <span class="keyword">const</span> query = state.<span class="var-name">filtroBusqueda</span>.<span class="func-name">trim</span>().<span class="func-name">toLowerCase</span>();
+  <span class="keyword">if</span> (query === <span class="string">''</span>) <span class="keyword">return</span> [...state.<span class="var-name">citas</span>];
+  <span class="keyword">return</span> state.<span class="var-name">citas</span>.<span class="func-name">filter</span>(cita => 
+    cita.<span class="var-name">paciente</span>.<span class="func-name">toLowerCase</span>().<span class="func-name">includes</span>(query)
+  );
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- ordenarCitasCronologicamente -->
+        <div class="section-card" id="ordenar">
+            <div class="section-header">
+                <span class="tag-badge">ordenarCitasCronologicamente()</span>
+                <span class="section-title">Ordenar Citas Cronológicamente</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Ordena un array de citas por fecha (más antigua a más nueva) y, si la fecha coincide, por hora. Modifica el array por referencia.</div>
+
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Sección V. Llamada dentro de <span class="func-name">renderizarInterfaz()</span> y antes de exportar CSV.</div>
+
+                    <div class="info-label">Método de ordenamiento</div>
+                    <div class="info-value">Usa <span class="func-name">array.sort()</span> con comparación lexicográfica de strings (<span class="func-name">localeCompare()</span>). Las fechas en formato AAAA-MM-DD y horas en HH:MM permiten comparación directa de strings.</div>
+
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Las citas se muestran en orden cronológico para facilitar la planificación del consultorio.</div>
+                </div>
+                <div class="code-block">
+<span class="keyword">function</span> <span class="func-name">ordenarCitasCronologicamente</span>(arrayCitas) {
+  arrayCitas.<span class="func-name">sort</span>((a, b) => {
+    <span class="keyword">if</span> (a.<span class="var-name">fecha</span> !== b.<span class="var-name">fecha</span>) {
+      <span class="keyword">return</span> a.<span class="var-name">fecha</span>.<span class="func-name">localeCompare</span>(b.<span class="var-name">fecha</span>);
+    }
+    <span class="keyword">return</span> a.<span class="var-name">hora</span>.<span class="func-name">localeCompare</span>(b.<span class="var-name">hora</span>);
+  });
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- renderizarTarjetasCita -->
+        <div class="section-card" id="render-tarjetas">
+            <div class="section-header">
+                <span class="tag-badge">renderizarTarjetasCita()</span>
+                <span class="section-title">Inyectar Tarjetas de Citas en el DOM</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Limpia el contenedor de citas y reconstruye las tarjetas HTML dinámicamente. Cada tarjeta incluye nombre del paciente, servicio (con badge de color), fecha formateada, hora formateada, y botones de editar/eliminar.</div>
+
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Sección V. Llamada desde <span class="func-name">renderizarInterfaz()</span>.</div>
+
+                    <div class="info-label">Técnicas utilizadas</div>
+                    <div class="info-value">
+                        <ul style="margin-left: 16px;">
+                            <li><span class="func-name">document.createElement()</span> — Crea nodos DOM</li>
+                            <li><span class="func-name">innerHTML</span> — Inyecta markup con template literals</li>
+                            <li><span class="func-name">contenedor.appendChild()</span> — Agrega tarjetas al DOM</li>
+                            <li><span class="func-name">escaparHTML()</span> — Sanitiza nombres de pacientes para evitar XSS</li>
+                            <li><span class="func-name">escaparJS()</span> — Escapa comillas para atributos onclick</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-label">Empty State</div>
+                    <div class="info-value">Si no hay citas, muestra un estado vacío con icono SVG, título "No se encontraron citas" y mensaje contextual según si hay citas en el estado o no.</div>
+
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">La generación dinámica permite que la UI se adapte a cualquier cantidad de citas. La sanitización es crítica para seguridad.</div>
+                </div>
+                <div class="code-block">
+<span class="keyword">function</span> <span class="func-name">renderizarTarjetasCita</span>(citasAMostrar) {
+  contenedorListaCitas.<span class="attr-name">innerHTML</span> = <span class="string">''</span>;
+  <span class="keyword">if</span> (citasAMostrar.<span class="attr-name">length</span> === <span class="number">0</span>) {
+    <span class="comment">// Renderizar empty state</span>
+    <span class="keyword">return</span>;
+  }
+  citasAMostrar.<span class="func-name">forEach</span>(cita => {
+    <span class="keyword">const</span> tarjeta = <span class="func-name">document.createElement</span>(<span class="string">'div'</span>);
+    tarjeta.<span class="attr-name">className</span> = <span class="string">`appointment-card service-${cita.servicio.toLowerCase()}`</span>;
+    <span class="comment">// ... innerHTML con datos sanitizados</span>
+    contenedorListaCitas.<span class="func-name">appendChild</span>(tarjeta);
+  });
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- actualizarEstadisticasDashboard -->
+        <div class="section-card" id="estadisticas">
+            <div class="section-header">
+                <span class="tag-badge">actualizarEstadisticasDashboard()</span>
+                <span class="section-title">Calcular y Actualizar Estadísticas del Dashboard</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Calcula 4 métricas agregadas sobre <span class="var-name">state.citas</span> y actualiza los 4 indicadores del dashboard en tiempo real.</div>
+
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Sección V. Llamada desde <span class="func-name">renderizarInterfaz()</span>.</div>
+
+                    <div class="info-label">Métricas calculadas</div>
+                    <div class="info-value">
+                        <ul style="margin-left: 16px;">
+                            <li><strong>Total Citas:</strong> <span class="func-name">state.citas.length</span></li>
+                            <li><strong>Citas Hoy:</strong> Filtra citas donde <span class="var-name">c.fecha === hoyStr</span></li>
+                            <li><strong>Próxima Cita:</strong> Filtra citas futuras (fecha > hoy, o fecha=hoy y hora >= actual), ordena y toma la primera</li>
+                            <li><strong>Servicio Más Solicitado:</strong> Calcula la moda estadística contando ocurrencias de cada servicio</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Proporciona al usuario una visión rápida del estado del consultorio sin necesidad de contar manualmente.</div>
+                </div>
+                <div class="code-block">
+<span class="keyword">function</span> <span class="func-name">actualizarEstadisticasDashboard</span>() {
+  <span class="keyword">const</span> hoyStr = <span class="func-name">obtenerFechaHoyLocal</span>();
+  statTotalValor.<span class="attr-name">textContent</span> = state.<span class="var-name">citas</span>.<span class="attr-name">length</span>;
+  <span class="comment">// ... cálculos de citas hoy, próxima cita, servicio popular</span>
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== CATEGORÍA 6: CREAR CITA ==================== -->
+        <div class="category-divider"><h2>➕ CREAR CITA (CREATE)</h2></div>
+
+        <!-- submit cita-form -->
+        <div class="section-card" id="create">
+            <div class="section-header">
+                <span class="tag-badge">submit #cita-form</span>
+                <span class="section-title">Listener de Creación de Nueva Cita</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Escucha el evento submit del formulario principal, valida los datos, verifica reglas de negocio y crea una nueva cita en el estado.</div>
+
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Sección VI. Listener registrado sobre <span class="var-name">formularioCita</span>.</div>
+
+                    <div class="info-label">Validaciones aplicadas</div>
+                    <div class="info-value">
+                        <ol style="margin-left: 16px;">
+                            <li><strong>Campos obligatorios:</strong> Verifica que paciente, servicio, fecha y hora no estén vacíos</li>
+                            <li><strong>Fines de semana:</strong> Usa <span class="func-name">new Date(fecha).getUTCDay()</span> (0=Domingo, 6=Sábado). Muestra advertencia visual</li>
+                            <li><strong>Choque de horarios (Double Booking):</strong> Busca si ya existe una cita a la misma fecha y hora</li>
+                        </ol>
+                    </div>
+
+                    <div class="info-label">Generación de ID</div>
+                    <div class="info-value">Usa <span class="func-name">Date.now()</span> como clave primaria única (timestamp de milisegundos).</div>
+
+                    <div class="info-label">Flujo tras validación</div>
+                    <div class="info-value">Crea objeto cita → <span class="func-name">state.citas.push()</span> → <span class="func-name">guardarCitasEnAlmacenamiento()</span> → <span class="func-name">formularioCita.reset()</span> → <span class="func-name">renderizarInterfaz()</span> → <span class="func-name">mostrarToast()</span></div>
+                </div>
+                <div class="code-block">
+formularioCita.<span class="func-name">addEventListener</span>(<span class="string">'submit'</span>, (e) => {
+  e.<span class="func-name">preventDefault</span>();
+  <span class="comment">// 1. Extraer valores</span>
+  <span class="comment">// 2. Validar campos obligatorios</span>
+  <span class="comment">// 3. Validar fin de semana (getUTCDay)</span>
+  <span class="comment">// 4. Validar choque de horarios (find)</span>
+  <span class="comment">// 5. Crear cita con id: Date.now()</span>
+  <span class="comment">// 6. Persistir y renderizar</span>
+});
+                </div>
+            </div>
+        </div>
+
+        <!-- input fecha listener -->
+        <div class="section-card" id="input-fecha-listener">
+            <div class="section-header">
+                <span class="tag-badge">input #fecha</span>
+                <span class="section-title">Validación Proactiva de Fecha (Fin de Semana)</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Escucha el evento input del campo de fecha y muestra/oculta la advertencia de fin de semana en tiempo real, antes de que el usuario envíe el formulario.</div>
+
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Sección VI. Listener registrado sobre <span class="var-name">inputFecha</span>.</div>
+
+                    <div class="info-label">Feedback visual</div>
+                    <div class="info-value">Muestra <span class="var-name">alertaFechaFinSemana</span> con <span class="attr-name">style.display = 'flex'</span> si el día es 0 o 6 (Domingo o Sábado).</div>
+
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Feedback inmediato mejora la UX. El usuario sabe que la fecha es inválida antes de hacer clic en Guardar.</div>
+                </div>
+                <div class="code-block">
+inputFecha.<span class="func-name">addEventListener</span>(<span class="string">'input'</span>, (e) => {
+  <span class="keyword">const</span> fechaSeleccionada = e.<span class="attr-name">target</span>.<span class="attr-name">value</span>;
+  <span class="keyword">const</span> diaSemana = <span class="keyword">new</span> <span class="func-name">Date</span>(fechaSeleccionada).<span class="func-name">getUTCDay</span>();
+  alertaFechaFinSemana.<span class="attr-name">style</span>.<span class="attr-name">display</span> = 
+    (diaSemana === <span class="number">0</span> || diaSemana === <span class="number">6</span>) ? <span class="string">'flex'</span> : <span class="string">'none'</span>;
+});
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== CATEGORÍA 7: ACTUALIZAR CITA ==================== -->
+        <div class="category-divider"><h2>✏️ ACTUALIZAR CITA (UPDATE)</h2></div>
+
+        <!-- abrirModalEdicion -->
+        <div class="section-card" id="abrir-modal">
+            <div class="section-header">
+                <span class="tag-badge">abrirModalEdicion(id)</span>
+                <span class="section-title">Abrir Modal de Edición con Datos de la Cita</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Busca la cita por ID en el estado, carga sus datos en los inputs del modal de edición y muestra el modal agregando la clase <span class="string">.show</span>.</div>
+
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Sección VII. Llamada desde el onclick de cada botón de editar en las tarjetas.</div>
+
+                    <div class="info-label">Parámetro</div>
+                    <div class="info-value"><span class="var-name">id</span> — Clave primaria (timestamp) de la cita a editar.</div>
+
+                    <div class="info-label">Acciones</div>
+                    <div class="info-value">
+                        <ul style="margin-left: 16px;">
+                            <li>Busca cita con <span class="func-name">state.citas.find(c => c.id === id)</span></li>
+                            <li>Carga valores en inputs del modal (paciente, servicio, fecha, hora)</li>
+                            <li>Verifica si la fecha es fin de semana para mostrar advertencia</li>
+                            <li>Agrega clase <span class="string">.show</span> al overlay</li>
+                            <li>Establece foco en el primer input (<span class="func-name">inputEditPaciente.focus()</span>)</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">El focus lock (foco atrapado) es una práctica de accesibilidad (A11y) que mantiene el teclado dentro del modal.</div>
+                </div>
+                <div class="code-block">
+<span class="keyword">function</span> <span class="func-name">abrirModalEdicion</span>(id) {
+  <span class="keyword">const</span> cita = state.<span class="var-name">citas</span>.<span class="func-name">find</span>(c => c.<span class="var-name">id</span> === id);
+  <span class="keyword">if</span> (!cita) <span class="keyword">return</span>;
+  inputEditId.<span class="attr-name">value</span> = cita.<span class="var-name">id</span>;
+  inputEditPaciente.<span class="attr-name">value</span> = cita.<span class="var-name">paciente</span>;
+  <span class="comment">// ... cargar demás campos</span>
+  modalEdicionOverlay.<span class="attr-name">classList</span>.<span class="func-name">add</span>(<span class="string">'show'</span>);
+  inputEditPaciente.<span class="func-name">focus</span>();
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- cerrarModalEdicion -->
+        <div class="section-card" id="cerrar-modal">
+            <div class="section-header">
+                <span class="tag-badge">cerrarModalEdicion()</span>
+                <span class="section-title">Cerrar Modal de Edición</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Remueve la clase <span class="string">.show</span> del overlay y resetea el formulario de edición.</div>
+
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Sección VII. Llamada desde botón cerrar, botón cancelar y clic fuera del modal.</div>
+
+                    <div class="info-label">Listeners asociados</div>
+                    <div class="info-value"><span class="var-name">botonCerrarModal</span>, <span class="var-name">botonCancelarModal</span>, y clic en el overlay (delegación verificando <span class="attr-name">e.target === modalEdicionOverlay</span>).</div>
+                </div>
+                <div class="code-block">
+<span class="keyword">function</span> <span class="func-name">cerrarModalEdicion</span>() {
+  modalEdicionOverlay.<span class="attr-name">classList</span>.<span class="func-name">remove</span>(<span class="string">'show'</span>);
+  formularioEdicion.<span class="func-name">reset</span>();
+  alertaEditFechaFinSemana.<span class="attr-name">style</span>.<span class="attr-name">display</span> = <span class="string">'none'</span>;
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- edit fecha listener -->
+        <div class="section-card" id="edit-fecha-listener">
+            <div class="section-header">
+                <span class="tag-badge">input #edit-fecha</span>
+                <span class="section-title">Validación Proactiva de Fecha en Edición</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Misma lógica que el listener de fecha de creación, pero aplicado al input del modal de edición (<span class="var-name">inputEditFecha</span>).</div>
+
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Sección VII. Listener registrado sobre <span class="var-name">inputEditFecha</span>.</div>
+                </div>
+                <div class="code-block">
+inputEditFecha.<span class="func-name">addEventListener</span>(<span class="string">'input'</span>, (e) => {
+  <span class="comment">// Misma lógica que inputFecha pero para alertaEditFechaFinSemana</span>
+});
+                </div>
+            </div>
+        </div>
+
+        <!-- submit edit-form -->
+        <div class="section-card" id="update">
+            <div class="section-header">
+                <span class="tag-badge">submit #edit-form</span>
+                <span class="section-title">Guardar Cambios de la Cita Editada</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Valida los datos del formulario de edición, verifica choque de horarios excluyendo la cita actual, actualiza el objeto en el estado y refresca la UI.</div>
+
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Sección VII. Listener registrado sobre <span class="var-name">formularioEdicion</span>.</div>
+
+                    <div class="info-label">Validación de choque diferenciada</div>
+                    <div class="info-value">La búsqueda de choque excluye la cita que se está editando: <span class="func-name">state.citas.find(c => c.id !== id && c.fecha === fecha && c.hora === hora)</span>. Esto permite mantener la misma fecha/hora si no se cambia.</div>
+
+                    <div class="info-label">Actualización</div>
+                    <div class="info-value">Usa <span class="func-name">state.citas.findIndex()</span> para obtener el índice y sobrescribe el objeto completo.</div>
+                </div>
+                <div class="code-block">
+formularioEdicion.<span class="func-name">addEventListener</span>(<span class="string">'submit'</span>, (e) => {
+  e.<span class="func-name">preventDefault</span>();
+  <span class="keyword">const</span> id = <span class="func-name">parseInt</span>(inputEditId.<span class="attr-name">value</span>);
+  <span class="comment">// ... validaciones de campos, fin de semana</span>
+  <span class="keyword">const</span> choque = state.<span class="var-name">citas</span>.<span class="func-name">find</span>(c => 
+    c.<span class="var-name">id</span> !== id && c.<span class="var-name">fecha</span> === fecha && c.<span class="var-name">hora</span> === hora
+  );
+  <span class="comment">// ... actualizar, persistir, cerrar modal, renderizar</span>
+});
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== CATEGORÍA 8: ELIMINAR CITA ==================== -->
+        <div class="category-divider"><h2>🗑️ ELIMINAR CITA (DELETE)</h2></div>
+
+        <!-- solicitarEliminarCita -->
+        <div class="section-card" id="solicitar-eliminar">
+            <div class="section-header">
+                <span class="tag-badge">solicitarEliminarCita(id, pacienteNombre)</span>
+                <span class="section-title">Solicitar Confirmación de Eliminación</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Configura el modal de confirmación con el nombre del paciente y el tipo de limpieza 'cita', luego muestra el diálogo.</div>
+
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Sección VIII. Llamada desde el onclick de cada botón de eliminar en las tarjetas.</div>
+
+                    <div class="info-label">Parámetros</div>
+                    <div class="info-value">
+                        <ul style="margin-left: 16px;">
+                            <li><span class="var-name">id</span> — ID de la cita a eliminar</li>
+                            <li><span class="var-name">pacienteNombre</span> — Nombre para mostrar en el diálogo (ya escapado)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="code-block">
+<span class="keyword">function</span> <span class="func-name">solicitarEliminarCita</span>(id, pacienteNombre) {
+  state.<span class="var-name">idCitaParaEliminar</span> = id;
+  state.<span class="var-name">tipoDeLimpieza</span> = <span class="string">'cita'</span>;
+  tituloConfirmacion.<span class="attr-name">textContent</span> = <span class="string">"¿Cancelar esta cita médica?"</span>;
+  descripcionConfirmacion.<span class="attr-name">innerHTML</span> = <span class="string">`Está a punto de borrar... <strong>${pacienteNombre}</strong>...`</span>;
+  modalConfirmacionOverlay.<span class="attr-name">classList</span>.<span class="func-name">add</span>(<span class="string">'show'</span>);
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- confirmar eliminación -->
+        <div class="section-card" id="confirmar-eliminar">
+            <div class="section-header">
+                <span class="tag-badge">click #btn-confirm-accept</span>
+                <span class="section-title">Confirmar y Ejecutar Eliminación</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Ejecuta la eliminación según el tipo configurado en el estado: una sola cita o todas las citas.</div>
+
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Sección VIII. Listener del botón Aceptar del modal de confirmación.</div>
+
+                    <div class="info-label">Lógica condicional</div>
+                    <div class="info-value">
+                        <ul style="margin-left: 16px;">
+                            <li><strong>tipoDeLimpieza === 'cita':</strong> Filtra <span class="var-name">state.citas</span> excluyendo el ID guardado</li>
+                            <li><strong>tipoDeLimpieza === 'citas':</strong> Asigna <span class="var-name">state.citas = []</span> (array vacío)</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-label">Post-eliminación</div>
+                    <div class="info-value">Siempre: <span class="func-name">guardarCitasEnAlmacenamiento()</span> → <span class="func-name">renderizarInterfaz()</span> → <span class="func-name">mostrarToast()</span> con tipo 'warning'.</div>
+                </div>
+                <div class="code-block">
+botonAceptarConfirmacion.<span class="func-name">addEventListener</span>(<span class="string">'click'</span>, () => {
+  modalConfirmacionOverlay.<span class="attr-name">classList</span>.<span class="func-name">remove</span>(<span class="string">'show'</span>);
+  <span class="keyword">if</span> (state.<span class="var-name">tipoDeLimpieza</span> === <span class="string">'cita'</span> && state.<span class="var-name">idCitaParaEliminar</span> !== <span class="keyword">null</span>) {
+    state.<span class="var-name">citas</span> = state.<span class="var-name">citas</span>.<span class="func-name">filter</span>(c => c.<span class="var-name">id</span> !== state.<span class="var-name">idCitaParaEliminar</span>);
+  } <span class="keyword">else if</span> (state.<span class="var-name">tipoDeLimpieza</span> === <span class="string">'citas'</span>) {
+    state.<span class="var-name">citas</span> = [];
+  }
+  <span class="func-name">guardarCitasEnAlmacenamiento</span>();
+  <span class="func-name">renderizarInterfaz</span>();
+  <span class="func-name">mostrarToast</span>(<span class="string">"Cita eliminada del sistema."</span>, <span class="string">"warning"</span>);
+});
+                </div>
+            </div>
+        </div>
+
+        <!-- cancelar confirmación -->
+        <div class="section-card" id="cancelar-confirm">
+            <div class="section-header">
+                <span class="tag-badge">click #btn-confirm-cancel</span>
+                <span class="section-title">Cancelar Diálogo de Confirmación</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Oculta el modal de confirmación y resetea el ID de cita para eliminar.</div>
+
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Sección VIII. Listener del botón Cancelar del modal de confirmación.</div>
+                </div>
+                <div class="code-block">
+botonCancelarConfirmacion.<span class="func-name">addEventListener</span>(<span class="string">'click'</span>, () => {
+  modalConfirmacionOverlay.<span class="attr-name">classList</span>.<span class="func-name">remove</span>(<span class="string">'show'</span>);
+  state.<span class="var-name">idCitaParaEliminar</span> = <span class="keyword">null</span>;
+});
+                </div>
+            </div>
+        </div>
+
+        <!-- limpiar todo -->
+        <div class="section-card" id="limpiar-todo">
+            <div class="section-header">
+                <span class="tag-badge">click #btn-limpiar-todo</span>
+                <span class="section-title">Limpiar Todas las Citas (Purge)</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Configura el modal de confirmación para modo masivo ('citas') y muestra advertencia de seguridad. Si no hay citas, muestra toast informativo.</div>
+
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Sección VIII. Listener del botón "Limpiar Todo" en la barra de acciones.</div>
+
+                    <div class="info-label">Mensaje de advertencia</div>
+                    <div class="info-value">Muestra texto en negrita: "¡ADVERTENCIA DE SEGURIDAD!" y recomienda descargar el CSV antes de proceder.</div>
+                </div>
+                <div class="code-block">
+botonLimpiarTodo.<span class="func-name">addEventListener</span>(<span class="string">'click'</span>, () => {
+  <span class="keyword">if</span> (state.<span class="var-name">citas</span>.<span class="attr-name">length</span> === <span class="number">0</span>) {
+    <span class="func-name">mostrarToast</span>(<span class="string">"No hay registros que limpiar."</span>, <span class="string">"info"</span>);
+    <span class="keyword">return</span>;
+  }
+  state.<span class="var-name">tipoDeLimpieza</span> = <span class="string">'citas'</span>;
+  tituloConfirmacion.<span class="attr-name">textContent</span> = <span class="string">"¿Eliminar TODAS las citas?"</span>;
+  <span class="comment">// ... mostrar modal</span>
+});
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== CATEGORÍA 9: BÚSQUEDA ==================== -->
+        <div class="category-divider"><h2>🔍 BÚSQUEDA Y FILTRADO</h2></div>
+
+        <!-- buscar -->
+        <div class="section-card" id="buscar">
+            <div class="section-header">
+                <span class="tag-badge">input #buscador</span>
+                <span class="section-title">Búsqueda en Tiempo Real (Live Filter)</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Escucha cada tecla presionada en el campo de búsqueda, actualiza <span class="var-name">state.filtroBusqueda</span> y vuelve a renderizar la lista inmediatamente.</div>
+
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Sección IX. Listener registrado sobre <span class="var-name">inputBuscador</span>.</div>
+
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">El filtrado reactivo (live filter) proporciona feedback instantáneo sin necesidad de botón de buscar.</div>
+                </div>
+                <div class="code-block">
+inputBuscador.<span class="func-name">addEventListener</span>(<span class="string">'input'</span>, (e) => {
+  state.<span class="var-name">filtroBusqueda</span> = e.<span class="attr-name">target</span>.<span class="attr-name">value</span>;
+  <span class="func-name">renderizarInterfaz</span>();
+});
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== CATEGORÍA 10: EXPORTACIÓN ==================== -->
+        <div class="category-divider"><h2>📤 EXPORTACIÓN DE REPORTES</h2></div>
+
+        <!-- exportar -->
+        <div class="section-card" id="exportar">
+            <div class="section-header">
+                <span class="tag-badge">click #exportar-btn</span>
+                <span class="section-title">Generar y Descargar Reporte CSV</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Genera un archivo CSV con todas las citas ordenadas cronológicamente, incluye BOM UTF-8 para compatibilidad con Excel en español, y fuerza la descarga local sin servidor.</div>
+
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Sección X. Listener del botón "Exportar Reporte".</div>
+
+                    <div class="info-label">APIs del Navegador</div>
+                    <div class="info-value">
+                        <ul style="margin-left: 16px;">
+                            <li><span class="func-name">new Blob()</span> — Crea objeto binario/texto en memoria RAM</li>
+                            <li><span class="func-name">URL.createObjectURL()</span> — Genera URL temporal vinculada al Blob</li>
+                            <li><span class="func-name">URL.revokeObjectURL()</span> — Libera memoria del Blob tras la descarga</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-label">Seguridad CSV</div>
+                    <div class="info-value">Escapa comillas dobles en nombres de pacientes (<span class="func-name">replace(/"/g, '""')</span>) para evitar inyección de fórmulas CSV. Usa comillas alrededor de cada campo.</div>
+
+                    <div class="info-label">BOM UTF-8</div>
+                    <div class="info-value">Prefija <span class="string">"\ufeff"</span> al contenido para que Excel reconozca correctamente caracteres especiales (tildes, eñes).</div>
+                </div>
+                <div class="code-block">
+<span class="keyword">const</span> archivoBlob = <span class="keyword">new</span> <span class="func-name">Blob</span>([contenidoCsv], { type: <span class="string">'text/csv;charset=utf-8;'</span> });
+<span class="keyword">const</span> enlace = <span class="func-name">document.createElement</span>(<span class="string">'a'</span>);
+<span class="keyword">const</span> url = <span class="func-name">URL.createObjectURL</span>(archivoBlob);
+enlace.<span class="attr-name">href</span> = url;
+enlace.<span class="attr-name">download</span> = <span class="string">`reporte_citas_${obtenerFechaHoyLocal()}.csv`</span>;
+enlace.<span class="func-name">click</span>();
+<span class="func-name">URL.revokeObjectURL</span>(url);
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== CATEGORÍA 11: HELPERS ==================== -->
+        <div class="category-divider"><h2>🛠️ FUNCIONES AUXILIARES (HELPERS)</h2></div>
+
+        <!-- obtenerFechaHoyLocal -->
+        <div class="section-card" id="fecha-hoy">
+            <div class="section-header">
+                <span class="tag-badge">obtenerFechaHoyLocal()</span>
+                <span class="section-title">Obtener Fecha Actual en Formato Local</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Devuelve la fecha actual en formato AAAA-MM-DD usando el huso horario local del cliente.</div>
+
+                    <div class="info-label">Retorno</div>
+                    <div class="info-value">String en formato <span class="string">'AAAA-MM-DD'</span>.</div>
+
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Evita el desfase UTC que ocurre con <span class="func-name">toISOString()</span>, que puede restar un día en zonas horarias americanas.</div>
+                </div>
+                <div class="code-block">
+<span class="keyword">function</span> <span class="func-name">obtenerFechaHoyLocal</span>() {
+  <span class="keyword">const</span> hoy = <span class="keyword">new</span> <span class="func-name">Date</span>();
+  <span class="keyword">return</span> <span class="string">`${hoy.getFullYear()}-${String(hoy.getMonth()+1).padStart(2,'0')}-${String(hoy.getDate()).padStart(2,'0')}`</span>;
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- formatearFechaEspanol -->
+        <div class="section-card" id="formatear-fecha">
+            <div class="section-header">
+                <span class="tag-badge">formatearFechaEspanol()</span>
+                <span class="section-title">Formatear Fecha a Español Legible</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Convierte una fecha en formato AAAA-MM-DD a texto legible en español (ej: "Lunes, 22 de junio de 2026").</div>
+
+                    <div class="info-label">Técnica</div>
+                    <div class="info-value">Divide el string manualmente y usa <span class="func-name">new Date(anio, mes, dia)</span> para evitar desfases UTC. Luego aplica <span class="func-name">toLocaleDateString('es-ES', ...)</span> con opciones de día de semana, día numérico, mes y año.</div>
+
+                    <div class="info-label">Capitalización</div>
+                    <div class="info-value">Capitaliza la primera letra del resultado con <span class="func-name">charAt(0).toUpperCase()</span> + <span class="func-name">slice(1)</span>.</div>
+                </div>
+                <div class="code-block">
+<span class="keyword">function</span> <span class="func-name">formatearFechaEspanol</span>(fechaTexto) {
+  <span class="keyword">const</span> partes = fechaTexto.<span class="func-name">split</span>(<span class="string">'-'</span>);
+  <span class="keyword">const</span> fechaObj = <span class="keyword">new</span> <span class="func-name">Date</span>(<span class="func-name">parseInt</span>(partes[<span class="number">0</span>]), <span class="func-name">parseInt</span>(partes[<span class="number">1</span>])-<span class="number">1</span>, <span class="func-name">parseInt</span>(partes[<span class="number">2</span>]));
+  <span class="keyword">const</span> opciones = { weekday: <span class="string">'long'</span>, day: <span class="string">'numeric'</span>, month: <span class="string">'long'</span>, year: <span class="string">'numeric'</span> };
+  <span class="keyword">let</span> f = fechaObj.<span class="func-name">toLocaleDateString</span>(<span class="string">'es-ES'</span>, opciones);
+  <span class="keyword">return</span> f.<span class="func-name">charAt</span>(<span class="number">0</span>).<span class="func-name">toUpperCase</span>() + f.<span class="func-name">slice</span>(<span class="number">1</span>);
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- formatearHora12 -->
+        <div class="section-card" id="formatear-hora">
+            <div class="section-header">
+                <span class="tag-badge">formatearHora12()</span>
+                <span class="section-title">Formatear Hora a Formato 12 Horas (AM/PM)</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Convierte una hora en formato HH:MM (24h) a formato HH:MM AM/PM (12h).</div>
+
+                    <div class="info-label">Lógica</div>
+                    <div class="info-value">Divide el string por ':', calcula AM/PM, convierte horas 0→12 y 13-23→1-11, y formatea con <span class="func-name">padStart(2, '0')</span>.</div>
+                </div>
+                <div class="code-block">
+<span class="keyword">function</span> <span class="func-name">formatearHora12</span>(horaTexto) {
+  <span class="keyword">const</span> partes = horaTexto.<span class="func-name">split</span>(<span class="string">':'</span>);
+  <span class="keyword">let</span> horas = <span class="func-name">parseInt</span>(partes[<span class="number">0</span>]);
+  <span class="keyword">const</span> ampm = horas >= <span class="number">12</span> ? <span class="string">'PM'</span> : <span class="string">'AM'</span>;
+  horas = horas % <span class="number">12</span>;
+  horas = horas ? horas : <span class="number">12</span>;
+  <span class="keyword">return</span> <span class="string">`${String(horas).padStart(2,'0')}:${partes[1]} ${ampm}`</span>;
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- escaparHTML -->
+        <div class="section-card" id="escapar-html">
+            <div class="section-header">
+                <span class="tag-badge">escaparHTML()</span>
+                <span class="section-title">Sanitización contra XSS (Cross-Site Scripting)</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Reemplaza caracteres especiales HTML por sus entidades correspondientes para evitar inyección de código malicioso.</div>
+
+                    <div class="info-label">Caracteres escapados</div>
+                    <div class="info-value">& → &amp;, < → &lt;, > → &gt;, " → &quot;, ' → &#x27;, / → &#x2F;, ` → &grave;</div>
+
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Los nombres de pacientes se inyectan en innerHTML. Sin sanitización, un nombre como <span class="string">"&lt;script&gt;alert('hacked')&lt;/script&gt;"</span> ejecutaría código.</div>
+                </div>
+                <div class="code-block">
+<span class="keyword">function</span> <span class="func-name">escaparHTML</span>(texto) {
+  <span class="keyword">const</span> mapa = {
+    <span class="string">'&'</span>: <span class="string">'&amp;'</span>, <span class="string">'<'</span>: <span class="string">'&lt;'</span>, <span class="string">'>'</span>: <span class="string">'&gt;'</span>,
+    <span class="string">'"'</span>: <span class="string">'&quot;'</span>, <span class="string">"'"</span>: <span class="string">'&#x27;'</span>, <span class="string">'/'</span>: <span class="string">'&#x2F;'</span>, <span class="string">'`'</span>: <span class="string">'&grave;'</span>
+  };
+  <span class="keyword">return</span> texto.<span class="func-name">replace</span>(<span class="string">/[&<>"'`\/]/g</span>, m => mapa[m]);
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- escaparJS -->
+        <div class="section-card" id="escapar-js">
+            <div class="section-header">
+                <span class="tag-badge">escaparJS()</span>
+                <span class="section-title">Escapar Comillas para Atributos onclick</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Escapa comillas simples en nombres de pacientes para evitar romper los atributos <span class="attr-name">onclick</span> de los botones de eliminar.</div>
+
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Un nombre como <span class="string">"O'Brien"</span> rompería el string JavaScript: <span class="string">onclick="solicitarEliminarCita(1, 'O'Brien')"</span>. Escapando a <span class="string">"O\'Brien"</span> se mantiene la sintaxis válida.</div>
+                </div>
+                <div class="code-block">
+<span class="keyword">function</span> <span class="func-name">escaparJS</span>(texto) {
+  <span class="keyword">return</span> texto.<span class="func-name">replace</span>(<span class="string">/'/g</span>, <span class="string">"\\'"</span>);
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== CATEGORÍA 12: TOASTS ==================== -->
+        <div class="category-divider"><h2>🔔 NOTIFICACIONES FLOTANTES (TOASTS)</h2></div>
+
+        <!-- mostrarToast -->
+        <div class="section-card" id="toast">
+            <div class="section-header">
+                <span class="tag-badge">mostrarToast(mensaje, tipo)</span>
+                <span class="section-title">Crear y Mostrar Notificaciones Toast</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Crea dinámicamente un elemento toast con icono SVG, mensaje sanitizado, y lo inyecta en el contenedor flotante. Se auto-destruye tras 4 segundos con animación CSS.</div>
+
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Sección XII. Función auxiliar llamada desde todo el sistema.</div>
+
+                    <div class="info-label">Parámetros</div>
+                    <div class="info-value">
+                        <ul style="margin-left: 16px;">
+                            <li><span class="var-name">mensaje</span> — Texto de la notificación (sanitizado con <span class="func-name">escaparHTML()</span>)</li>
+                            <li><span class="var-name">tipo</span> — 'success' (verde), 'error' (rojo), 'warning' (naranja), 'info' (azul)</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-label">Iconos SVG</div>
+                    <div class="info-value">Cada tipo tiene un icono SVG distinto: check circular (success), cruz (error), triángulo de advertencia (warning), letra i (info).</div>
+
+                    <div class="info-label">Auto-destrucción</div>
+                    <div class="info-value">Usa <span class="func-name">setTimeout(() => {...}, 4000)</span> para iniciar animación de salida y <span class="func-name">transitionend</span> para eliminar el nodo del DOM tras 300ms.</div>
+
+                    <div class="info-label">Accesibilidad</div>
+                    <div class="info-value">Atributo <span class="attr-name">role="alert"</span> en cada toast. El contenedor tiene <span class="attr-name">aria-live="assertive"</span> y <span class="attr-name">aria-atomic="true"</span> para anunciar inmediatamente al lector de pantalla.</div>
+                </div>
+                <div class="code-block">
+<span class="keyword">function</span> <span class="func-name">mostrarToast</span>(mensaje, tipo = <span class="string">'success'</span>) {
+  <span class="keyword">const</span> toast = <span class="func-name">document.createElement</span>(<span class="string">'div'</span>);
+  toast.<span class="attr-name">className</span> = <span class="string">`toast toast-${tipo}`</span>;
+  toast.<span class="func-name">setAttribute</span>(<span class="string">'role'</span>, <span class="string">'alert'</span>);
+  <span class="comment">// ... inyectar icono SVG + mensaje escapado</span>
+  contenedorToasts.<span class="func-name">appendChild</span>(toast);
+  <span class="func-name">setTimeout</span>(() => {
+    toast.<span class="attr-name">classList</span>.<span class="func-name">add</span>(<span class="string">'dismissing'</span>);
+    toast.<span class="func-name">addEventListener</span>(<span class="string">'transitionend'</span>, () => toast.<span class="func-name">remove</span>());
+  }, <span class="number">4000</span>);
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== RESUMEN POR CATEGORÍAS ==================== -->
+        <div class="category-divider"><h2>📊 RESUMEN POR CATEGORÍAS</h2></div>
+
+        <div class="section-card" style="border-left: 4px solid var(--primary);">
+            <div class="section-body">
+                <h3 style="color: var(--primary); margin-bottom: 16px; font-size: 1.1rem;">🏗️ Estado y Referencias (2 elementos)</h3>
+                <ul style="margin-left: 20px; color: var(--text);">
+                    <li><strong>const state</strong> — Árbol de estado único (citas, filtro, id para eliminar, tipo de limpieza)</li>
+                    <li><strong>DOM Refs</strong> — 20+ referencias cacheadas a elementos del DOM organizadas por áreas funcionales</li>
+                </ul>
+
+                <h3 style="color: var(--primary); margin: 24px 0 16px; font-size: 1.1rem;">⚡ Inicialización (2 elementos)</h3>
+                <ul style="margin-left: 20px; color: var(--text);">
+                    <li><strong>DOMContentLoaded</strong> — Punto de entrada: tema, localStorage, fecha mínima, render, toast</li>
+                    <li><strong>establecerLimiteFechaMinima()</strong> — Calcula fecha local AAAA-MM-DD y asigna min a inputs</li>
+                </ul>
+
+                <h3 style="color: var(--primary); margin: 24px 0 16px; font-size: 1.1rem;">🌗 Tema Visual (1 elemento)</h3>
+                <ul style="margin-left: 20px; color: var(--text);">
+                    <li><strong>inicializarTemaClaroOscuro()</strong> — Lee localStorage o detecta preferencia del SO con matchMedia</li>
+                </ul>
+
+                <h3 style="color: var(--primary); margin: 24px 0 16px; font-size: 1.1rem;">💾 Persistencia (2 elementos)</h3>
+                <ul style="margin-left: 20px; color: var(--text);">
+                    <li><strong>cargarCitasDesdeAlmacenamiento()</strong> — JSON.parse desde localStorage con try/catch</li>
+                    <li><strong>guardarCitasEnAlmacenamiento()</strong> — JSON.stringify a localStorage con manejo de errores</li>
+                </ul>
+
+                <h3 style="color: var(--primary); margin: 24px 0 16px; font-size: 1.1rem;">🎨 Renderizado (4 elementos)</h3>
+                <ul style="margin-left: 20px; color: var(--text);">
+                    <li><strong>renderizarInterfaz()</strong> — Pipeline central: filtrar → ordenar → renderizar tarjetas → estadísticas</li>
+                    <li><strong>filtrarCitasActualmente()</strong> — Filtrado por nombre con toLowerCase e includes</li>
+                    <li><strong>ordenarCitasCronologicamente()</strong> — Sort por fecha y hora con localeCompare</li>
+                    <li><strong>renderizarTarjetasCita()</strong> — createElement + innerHTML con sanitización XSS</li>
+                    <li><strong>actualizarEstadisticasDashboard()</strong> — Total, hoy, próxima, servicio más popular</li>
+                </ul>
+
+                <h3 style="color: var(--primary); margin: 24px 0 16px; font-size: 1.1rem;">➕ Crear Cita (2 elementos)</h3>
+                <ul style="margin-left: 20px; color: var(--text);">
+                    <li><strong>submit #cita-form</strong> — Validación de campos, fines de semana, double-booking, Date.now() como ID</li>
+                    <li><strong>input #fecha</strong> — Validación proactiva de fin de semana con getUTCDay</li>
+                </ul>
+
+                <h3 style="color: var(--primary); margin: 24px 0 16px; font-size: 1.1rem;">✏️ Actualizar Cita (4 elementos)</h3>
+                <ul style="margin-left: 20px; color: var(--text);">
+                    <li><strong>abrirModalEdicion(id)</strong> — Carga datos en modal, focus lock, muestra overlay</li>
+                    <li><strong>cerrarModalEdicion()</strong> — Oculta overlay, resetea formulario</li>
+                    <li><strong>input #edit-fecha</strong> — Validación proactiva de fin de semana en edición</li>
+                    <li><strong>submit #edit-form</strong> — Validación excluyendo cita actual, findIndex + sobrescritura</li>
+                </ul>
+
+                <h3 style="color: var(--primary); margin: 24px 0 16px; font-size: 1.1rem;">🗑️ Eliminar Cita (4 elementos)</h3>
+                <ul style="margin-left: 20px; color: var(--text);">
+                    <li><strong>solicitarEliminarCita(id, nombre)</strong> — Configura modal de confirmación para una cita</li>
+                    <li><strong>click #btn-confirm-accept</strong> — Ejecuta eliminación según tipoDeLimpieza ('cita' o 'citas')</li>
+                    <li><strong>click #btn-confirm-cancel</strong> — Cierra modal sin eliminar</li>
+                    <li><strong>click #btn-limpiar-todo</strong> — Configura confirmación masiva con advertencia de seguridad</li>
+                </ul>
+
+                <h3 style="color: var(--primary); margin: 24px 0 16px; font-size: 1.1rem;">🔍 Búsqueda (1 elemento)</h3>
+                <ul style="margin-left: 20px; color: var(--text);">
+                    <li><strong>input #buscador</strong> — Live filter: actualiza state.filtroBusqueda y renderiza en tiempo real</li>
+                </ul>
+
+                <h3 style="color: var(--primary); margin: 24px 0 16px; font-size: 1.1rem;">📤 Exportación (1 elemento)</h3>
+                <ul style="margin-left: 20px; color: var(--text);">
+                    <li><strong>click #exportar-btn</strong> — Genera CSV con BOM UTF-8, Blob, URL.createObjectURL, descarga y revoke</li>
+                </ul>
+
+                <h3 style="color: var(--primary); margin: 24px 0 16px; font-size: 1.1rem;">🛠️ Helpers (5 elementos)</h3>
+                <ul style="margin-left: 20px; color: var(--text);">
+                    <li><strong>obtenerFechaHoyLocal()</strong> — Fecha local AAAA-MM-DD sin desfase UTC</li>
+                    <li><strong>formatearFechaEspanol()</strong> — AAAA-MM-DD → "Lunes, 22 de junio de 2026"</li>
+                    <li><strong>formatearHora12()</strong> — HH:MM → "03:30 PM"</li>
+                    <li><strong>escaparHTML()</strong> — Sanitización contra XSS con mapa de entidades</li>
+                    <li><strong>escaparJS()</strong> — Escapa comillas simples para atributos onclick</li>
+                </ul>
+
+                <h3 style="color: var(--primary); margin: 24px 0 16px; font-size: 1.1rem;">🔔 Toasts (1 elemento)</h3>
+                <ul style="margin-left: 20px; color: var(--text);">
+                    <li><strong>mostrarToast(mensaje, tipo)</strong> — Notificación dinámica con icono SVG, auto-destrucción en 4s, role="alert"</li>
+                </ul>
+
+                <div class="highlight-box" style="margin-top: 24px;">
+                    <strong>📈 Total de funciones y listeners documentados: 30+</strong><br>
+                    Patrones de diseño: Single State Tree, Observer-like Update, Module Pattern<br>
+                    APIs del Navegador: Web Storage, DOM, Blob, URL, Date, Intl, matchMedia<br>
+                    Documento generado el 22 de junio de 2026
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

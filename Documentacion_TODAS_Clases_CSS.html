@@ -1,0 +1,2065 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Documentación completa de las 80 Clases CSS del Sistema de Gestión Odontológica - Dra. Alicia J. Colmenares. Documento con títulos de sección para cada clase CSS.">
+    <meta name="author" content="Ivor Alexander Guzmán Z.">
+    <title>Documentación CSS - Sistema de Gestión Odontológica</title>
+    <style>
+        :root {
+            --primary: #0d9488;
+            --primary-dark: #0f766e;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --code-bg: #f1f5f9;
+            --tag-color: #c2410c;
+            --attr-color: #0369a1;
+            --value-color: #15803d;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header-doc {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(13, 148, 136, 0.2);
+        }
+
+        .header-doc h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .header-doc p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .section-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 24px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .section-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        }
+
+        .section-header {
+            background: linear-gradient(90deg, #f0fdfa 0%, #ffffff 100%);
+            padding: 20px 24px;
+            border-bottom: 2px solid var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .tag-badge {
+            background: var(--primary);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .section-body {
+            padding: 24px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 12px 16px;
+            margin-bottom: 16px;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-align: right;
+            padding-top: 2px;
+        }
+
+        .info-value {
+            color: var(--text);
+        }
+
+        .code-block {
+            background: var(--code-bg);
+            border-radius: 8px;
+            padding: 16px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            border-left: 4px solid var(--primary);
+            margin: 12px 0;
+        }
+
+        .tag-name { color: var(--tag-color); font-weight: bold; }
+        .attr-name { color: var(--attr-color); }
+        .attr-value { color: var(--value-color); }
+        .comment { color: #94a3b8; font-style: italic; }
+        .css-prop { color: #7c3aed; }
+        .css-val { color: #db2777; }
+
+        .highlight-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 12px 16px;
+            border-radius: 0 8px 8px 0;
+            margin: 12px 0;
+            font-size: 0.95rem;
+        }
+
+        .category-divider {
+            text-align: center;
+            margin: 40px 0 30px;
+            position: relative;
+        }
+
+        .category-divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+        }
+
+        .category-divider h2 {
+            display: inline-block;
+            background: var(--bg);
+            padding: 0 24px;
+            position: relative;
+            color: var(--primary);
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        .toc {
+            background: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            padding: 24px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .toc h2 {
+            font-size: 1.2rem;
+            margin-bottom: 16px;
+            color: var(--primary);
+        }
+
+        .toc ul {
+            list-style: none;
+            columns: 2;
+            column-gap: 24px;
+        }
+
+        .toc li {
+            margin-bottom: 8px;
+            break-inside: avoid;
+        }
+
+        .toc a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .toc a:hover {
+            background: #f0fdfa;
+            color: var(--primary);
+        }
+
+        .toc .tag-mini {
+            font-family: monospace;
+            background: #e0f2fe;
+            color: var(--attr-color);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .summary-list {
+            margin-left: 20px;
+            color: var(--text);
+        }
+        .summary-list li { margin-bottom: 6px; }
+
+        @media (max-width: 768px) {
+            .toc ul { columns: 1; }
+            .info-grid { grid-template-columns: 1fr; gap: 4px; }
+            .info-label { text-align: left; }
+            .section-header { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-doc">
+            <h1>🎨 Documentación Completa de las Clases CSS</h1>
+            <p>Sistema de Gestión Odontológica — Dra. Alicia J. Colmenares S.</p>
+            <p style="font-size: 0.9rem; margin-top: 8px; opacity: 0.8;">Con títulos de sección para cada una de las 80 clases CSS</p>
+        </div>
+
+        <div class="toc">
+            <h2>📑 Tabla de Contenidos</h2>
+            <ul>
+                <li><a href="#app-container"><span class="tag-mini">.app-container</span> Contenedor Principal</a></li>
+                <li><a href="#main-header"><span class="tag-mini">.main-header</span> Cabecera Principal</a></li>
+                <li><a href="#brand-section"><span class="tag-mini">.brand-section</span> Sección de Marca</a></li>
+                <li><a href="#logo-container"><span class="tag-mini">.logo-container</span> Contenedor del Logo</a></li>
+                <li><a href="#header-title-group"><span class="tag-mini">.header-title-group</span> Grupo de Títulos</a></li>
+                <li><a href="#controls-section"><span class="tag-mini">.controls-section</span> Controles</a></li>
+                <li><a href="#status-indicator"><span class="tag-mini">.status-indicator</span> Indicador de Estado</a></li>
+                <li><a href="#status-dot"><span class="tag-mini">.status-dot</span> Puntito Pulsante</a></li>
+                <li><a href="#theme-toggle"><span class="tag-mini">.theme-toggle</span> Botón de Tema</a></li>
+                <li><a href="#icon-sun"><span class="tag-mini">.icon-sun</span> Icono del Sol</a></li>
+                <li><a href="#icon-moon"><span class="tag-mini">.icon-moon</span> Icono de la Luna</a></li>
+                <li><a href="#stats-grid"><span class="tag-mini">.stats-grid</span> Grid de Estadísticas</a></li>
+                <li><a href="#stat-card"><span class="tag-mini">.stat-card</span> Tarjeta de Estadística</a></li>
+                <li><a href="#stat-info"><span class="tag-mini">.stat-info</span> Info de Estadística</a></li>
+                <li><a href="#stat-label"><span class="tag-mini">.stat-label</span> Etiqueta de Métrica</a></li>
+                <li><a href="#stat-value"><span class="tag-mini">.stat-value</span> Valor de Métrica</a></li>
+                <li><a href="#stat-icon-wrapper"><span class="tag-mini">.stat-icon-wrapper</span> Wrapper de Icono</a></li>
+                <li><a href="#stat-total"><span class="tag-mini">.stat-total</span> Color Total</a></li>
+                <li><a href="#stat-hoy"><span class="tag-mini">.stat-hoy</span> Color Hoy</a></li>
+                <li><a href="#stat-proximas"><span class="tag-mini">.stat-proximas</span> Color Próximas</a></li>
+                <li><a href="#stat-popular"><span class="tag-mini">.stat-popular</span> Color Popular</a></li>
+                <li><a href="#main-grid"><span class="tag-mini">.main-grid</span> Grid Principal</a></li>
+                <li><a href="#panel-card"><span class="tag-mini">.panel-card</span> Tarjeta de Panel</a></li>
+                <li><a href="#panel-header"><span class="tag-mini">.panel-header</span> Cabecera del Panel</a></li>
+                <li><a href="#appointment-form"><span class="tag-mini">.appointment-form</span> Formulario</a></li>
+                <li><a href="#form-group"><span class="tag-mini">.form-group</span> Grupo de Campo</a></li>
+                <li><a href="#input-container"><span class="tag-mini">.input-container</span> Contenedor de Input</a></li>
+                <li><a href="#form-input"><span class="tag-mini">.form-input</span> Estilo de Inputs</a></li>
+                <li><a href="#validation-hint"><span class="tag-mini">.validation-hint</span> Mensaje de Validación</a></li>
+                <li><a href="#warning"><span class="tag-mini">.warning</span> Modificador Warning</a></li>
+                <li><a href="#btn-primary"><span class="tag-mini">.btn-primary</span> Botón Principal</a></li>
+                <li><a href="#btn-secondary"><span class="tag-mini">.btn-secondary</span> Botón Secundario</a></li>
+                <li><a href="#btn-export"><span class="tag-mini">.btn-export</span> Botón Exportar</a></li>
+                <li><a href="#btn-danger-outline"><span class="tag-mini">.btn-danger-outline</span> Botón Danger Outline</a></li>
+                <li><a href="#btn-danger"><span class="tag-mini">.btn-danger</span> Botón Danger Sólido</a></li>
+                <li><a href="#btn-icon"><span class="tag-mini">.btn-icon</span> Botón Icono</a></li>
+                <li><a href="#btn-icon-edit"><span class="tag-mini">.btn-icon-edit</span> Hover Editar</a></li>
+                <li><a href="#btn-icon-delete"><span class="tag-mini">.btn-icon-delete</span> Hover Eliminar</a></li>
+                <li><a href="#btn-close"><span class="tag-mini">.btn-close</span> Botón Cerrar</a></li>
+                <li><a href="#filter-actions-bar"><span class="tag-mini">.filter-actions-bar</span> Barra de Filtros</a></li>
+                <li><a href="#search-wrapper"><span class="tag-mini">.search-wrapper</span> Contenedor Buscador</a></li>
+                <li><a href="#action-buttons-group"><span class="tag-mini">.action-buttons-group</span> Grupo Acciones</a></li>
+                <li><a href="#appointments-container"><span class="tag-mini">.appointments-container</span> Contenedor Citas</a></li>
+                <li><a href="#appointment-card"><span class="tag-mini">.appointment-card</span> Tarjeta de Cita</a></li>
+                <li><a href="#service-limpieza"><span class="tag-mini">.service-*</span> Colores de Servicio</a></li>
+                <li><a href="#card-info"><span class="tag-mini">.card-info</span> Info de Cita</a></li>
+                <li><a href="#patient-name"><span class="tag-mini">.patient-name</span> Nombre Paciente</a></li>
+                <li><a href="#card-details"><span class="tag-mini">.card-details</span> Detalles de Cita</a></li>
+                <li><a href="#detail-item"><span class="tag-mini">.detail-item</span> Item de Detalle</a></li>
+                <li><a href="#badge"><span class="tag-mini">.badge</span> Etiqueta de Servicio</a></li>
+                <li><a href="#badge-limpieza"><span class="tag-mini">.badge-*</span> Colores de Badge</a></li>
+                <li><a href="#card-actions"><span class="tag-mini">.card-actions</span> Acciones de Tarjeta</a></li>
+                <li><a href="#modal-overlay"><span class="tag-mini">.modal-overlay</span> Overlay Modal</a></li>
+                <li><a href="#modal-container"><span class="tag-mini">.modal-container</span> Caja del Modal</a></li>
+                <li><a href="#modal-header"><span class="tag-mini">.modal-header</span> Cabecera Modal</a></li>
+                <li><a href="#modal-footer"><span class="tag-mini">.modal-footer</span> Pie del Modal</a></li>
+                <li><a href="#show"><span class="tag-mini">.show</span> Activación de Modal</a></li>
+                <li><a href="#toast-container"><span class="tag-mini">.toast-container</span> Contenedor Toast</a></li>
+                <li><a href="#toast"><span class="tag-mini">.toast</span> Notificación Toast</a></li>
+                <li><a href="#toast-message"><span class="tag-mini">.toast-message</span> Mensaje Toast</a></li>
+                <li><a href="#toast-icon"><span class="tag-mini">.toast-icon</span> Icono Toast</a></li>
+                <li><a href="#toast-success"><span class="tag-mini">.toast-success</span> Toast Éxito</a></li>
+                <li><a href="#toast-error"><span class="tag-mini">.toast-error</span> Toast Error</a></li>
+                <li><a href="#toast-warning"><span class="tag-mini">.toast-warning</span> Toast Warning</a></li>
+                <li><a href="#dismissing"><span class="tag-mini">.dismissing</span> Animación de Salida</a></li>
+                <li><a href="#confirm-modal-overlay"><span class="tag-mini">.confirm-modal-overlay</span> Overlay Confirmación</a></li>
+                <li><a href="#confirm-container"><span class="tag-mini">.confirm-container</span> Caja Confirmación</a></li>
+                <li><a href="#confirm-icon-box"><span class="tag-mini">.confirm-icon-box</span> Icono Alerta</a></li>
+                <li><a href="#confirm-title"><span class="tag-mini">.confirm-title</span> Título Confirmación</a></li>
+                <li><a href="#confirm-text"><span class="tag-mini">.confirm-text</span> Texto Confirmación</a></li>
+                <li><a href="#confirm-actions"><span class="tag-mini">.confirm-actions</span> Acciones Confirmación</a></li>
+                <li><a href="#empty-state"><span class="tag-mini">.empty-state</span> Estado Vacío</a></li>
+                <li><a href="#empty-state-icon"><span class="tag-mini">.empty-state-icon</span> Icono Vacío</a></li>
+                <li><a href="#main-footer"><span class="tag-mini">.main-footer</span> Pie de Página</a></li>
+            </ul>
+        </div>
+
+        <!-- ==================== CATEGORÍA 1: CONTENEDOR PRINCIPAL ==================== -->
+        <div class="category-divider"><h2>🏗️ CONTENEDOR PRINCIPAL</h2></div>
+
+        <div class="section-card" id="app-container">
+            <div class="section-header">
+                <span class="tag-badge">.app-container</span>
+                <span class="section-title">Contenedor Raíz de la Aplicación</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Es el contenedor raíz que envuelve TODA la aplicación. Limita el ancho máximo a 1280px para que no se vea estirada en monitores grandes, la centra horizontalmente con <span class="css-prop">margin: 0 auto</span>, y le da un padding de 24px para que nada toque los bordes del navegador. Usa flexbox en columna con <span class="css-prop">flex-grow: 1</span> para ocupar todo el espacio vertical.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value"><span class="tag-name">&lt;div class="app-container"&gt;</span> envuelve todo el contenido dentro de <span class="tag-name">&lt;body&gt;</span>.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">max-width: 1280px</span>, <span class="css-prop">margin: 0 auto</span>, <span class="css-prop">padding: 24px</span>, <span class="css-prop">flex-grow: 1</span>, <span class="css-prop">display: flex</span>, <span class="css-prop">flex-direction: column</span>, <span class="css-prop">gap: 24px</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Sin esta clase, la página se vería pegada a los bordes del navegador y muy ancha en monitores grandes. Proporciona el marco visual de la aplicación.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Contiene directamente a <span class="attr-name">.main-header</span>, <span class="attr-name">.stats-grid</span>, <span class="attr-name">.main-grid</span>, <span class="attr-name">.modal-overlay</span>, <span class="attr-name">.confirm-modal-overlay</span>, <span class="attr-name">.toast-container</span> y <span class="attr-name">.main-footer</span>.</div>
+                </div>
+                <div class="code-block">
+<span class="tag-name">.app-container</span> {
+    <span class="css-prop">max-width</span>: <span class="css-val">1280px</span>;
+    <span class="css-prop">margin</span>: <span class="css-val">0 auto</span>;
+    <span class="css-prop">padding</span>: <span class="css-val">24px</span>;
+    <span class="css-prop">display</span>: <span class="css-val">flex</span>;
+    <span class="css-prop">flex-direction</span>: <span class="css-val">column</span>;
+    <span class="css-prop">flex-grow</span>: <span class="css-val">1</span>;
+    <span class="css-prop">gap</span>: <span class="css-val">24px</span>;
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== CATEGORÍA 2: CABECERA Y BRANDING ==================== -->
+        <div class="category-divider"><h2>🏥 CABECERA Y BRANDING</h2></div>
+
+        <div class="section-card" id="main-header">
+            <div class="section-header">
+                <span class="tag-badge">.main-header</span>
+                <span class="section-title">Cabecera Principal de la Aplicación</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Crea la barra superior de la aplicación. Fondo blanco, borde gris, bordes redondeados (12px), padding de 16px arriba/abajo y 24px a los lados. Usa flexbox para distribuir el logo+título a la izquierda y los controles a la derecha (<span class="css-prop">justify-content: space-between</span>). Sombra sutil.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value"><span class="tag-name">&lt;header&gt;</span> al inicio de <span class="attr-name">.app-container</span>.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">background-color</span>: <span class="css-val">var(--bg-card)</span>, <span class="css-prop">border</span>: <span class="css-val">1px solid var(--border-color)</span>, <span class="css-prop">border-radius</span>: <span class="css-val">var(--radius-md)</span>, <span class="css-prop">padding</span>: <span class="css-val">16px 24px</span>, <span class="css-prop">display</span>: <span class="css-val">flex</span>, <span class="css-prop">justify-content</span>: <span class="css-val">space-between</span>, <span class="css-prop">align-items</span>: <span class="css-val">center</span>, <span class="css-prop">box-shadow</span>: <span class="css-val">var(--shadow-sm)</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Identifica visualmente la aplicación (logo + nombre del consultorio) y agrupa los controles globales (estado y tema).</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Contiene <span class="attr-name">.brand-section</span> (izquierda) y <span class="attr-name">.controls-section</span> (derecha).</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="brand-section">
+            <div class="section-header">
+                <span class="tag-badge">.brand-section</span>
+                <span class="section-title">Sección de Marca (Logo + Título)</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Agrupa horizontalmente el logo (<span class="attr-name">.logo-container</span>) y el título del consultorio (<span class="attr-name">.header-title-group</span>) usando flexbox con 16px de gap.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Dentro de <span class="attr-name">.main-header</span>, lado izquierdo.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">display</span>: <span class="css-val">flex</span>, <span class="css-prop">align-items</span>: <span class="css-val">center</span>, <span class="css-prop">gap</span>: <span class="css-val">16px</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Mantiene el logo y el texto del consultorio juntos como una unidad visual.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Contiene <span class="attr-name">.logo-container</span> y <span class="attr-name">.header-title-group</span>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="logo-container">
+            <div class="section-header">
+                <span class="tag-badge">.logo-container</span>
+                <span class="section-title">Contenedor del Logo con Degradado</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Dibuja el cuadrado del logo (48x48px) con fondo degradado de teal a sky blue (135 grados), bordes redondeados (12px), y sombra con color primario. Contiene el SVG del diente.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Dentro de <span class="attr-name">.brand-section</span>, antes del título.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">background</span>: <span class="css-val">linear-gradient(135deg, var(--primary), var(--secondary))</span>, <span class="css-prop">width</span>: <span class="css-val">48px</span>, <span class="css-prop">height</span>: <span class="css-val">48px</span>, <span class="css-prop">border-radius</span>: <span class="css-val">var(--radius-md)</span>, <span class="css-prop">display</span>: <span class="css-val">flex</span>, <span class="css-prop">align-items</span>: <span class="css-val">center</span>, <span class="css-prop">justify-content</span>: <span class="css-val">center</span>, <span class="css-prop">color</span>: <span class="css-val">#ffffff</span>, <span class="css-prop">box-shadow</span>: <span class="css-val">var(--shadow-primary)</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Identidad visual del consultorio odontológico. El degradado y la sombra le dan un aspecto moderno y profesional.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Dentro de <span class="attr-name">.brand-section</span>. Contiene un SVG icono del diente.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="header-title-group">
+            <div class="section-header">
+                <span class="tag-badge">.header-title-group</span>
+                <span class="section-title">Grupo de Títulos del Encabezado</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Contiene el <span class="tag-name">&lt;h1&gt;</span> (nombre de la doctora) y el <span class="tag-name">&lt;p&gt;</span> (dirección del consultorio). Los apila verticalmente con estilos tipográficos diferenciados.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">A la derecha del <span class="attr-name">.logo-container</span> dentro de <span class="attr-name">.brand-section</span>.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value">h1: <span class="css-prop">font-size</span>: <span class="css-val">20px</span>, <span class="css-prop">font-weight</span>: <span class="css-val">700</span>, <span class="css-prop">color</span>: <span class="css-val">var(--text-main)</span>, <span class="css-prop">letter-spacing</span>: <span class="css-val">-0.025em</span>, <span class="css-prop">line-height</span>: <span class="css-val">1.2</span>; p: <span class="css-prop">font-size</span>: <span class="css-val">13px</span>, <span class="css-prop">color</span>: <span class="css-val">var(--text-muted)</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Presenta la identidad del consultorio (nombre y ubicación) de forma clara y jerárquica.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Dentro de <span class="attr-name">.brand-section</span>. Contiene <span class="tag-name">&lt;h1&gt;</span> y <span class="tag-name">&lt;p&gt;</span>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="controls-section">
+            <div class="section-header">
+                <span class="tag-badge">.controls-section</span>
+                <span class="section-title">Sección de Controles (Estado + Tema)</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Agrupa horizontalmente el indicador de estado (<span class="attr-name">.status-indicator</span>) y el botón de tema (<span class="attr-name">.theme-toggle</span>) con 16px de separación.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Dentro de <span class="attr-name">.main-header</span>, lado derecho.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">display</span>: <span class="css-val">flex</span>, <span class="css-prop">align-items</span>: <span class="css-val">center</span>, <span class="css-prop">gap</span>: <span class="css-val">16px</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Mantiene los controles del usuario (estado y tema) organizados y alineados a la derecha del header.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Contiene <span class="attr-name">.status-indicator</span> y <span class="attr-name">.theme-toggle</span>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="status-indicator">
+            <div class="section-header">
+                <span class="tag-badge">.status-indicator</span>
+                <span class="section-title">Indicador de Estado Offline "Sistema Local"</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Badge que muestra "Sistema Local" con el puntito verde pulsante. Fondo verde muy claro (<span class="attr-name">.primary-light</span>), borde verde muy tenue (15% opacidad), forma de píldora (<span class="css-prop">border-radius: 9999px</span>), texto pequeño (12px) y negrita, color teal.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Dentro de <span class="attr-name">.controls-section</span>, a la izquierda del botón de tema.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">display</span>: <span class="css-val">flex</span>, <span class="css-prop">align-items</span>: <span class="css-val">center</span>, <span class="css-prop">gap</span>: <span class="css-val">8px</span>, <span class="css-prop">padding</span>: <span class="css-val">6px 12px</span>, <span class="css-prop">background-color</span>: <span class="css-val">var(--primary-light)</span>, <span class="css-prop">border</span>: <span class="css-val">1px solid rgba(13,148,136,0.15)</span>, <span class="css-prop">border-radius</span>: <span class="css-val">9999px</span>, <span class="css-prop">font-size</span>: <span class="css-val">12px</span>, <span class="css-prop">font-weight</span>: <span class="css-val">600</span>, <span class="css-prop">color</span>: <span class="css-val">var(--primary)</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Informa al usuario que la aplicación funciona 100% offline/local, sin necesidad de internet.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Contiene <span class="attr-name">.status-dot</span> y texto. Controlado por JS vía <span class="attr-name">#network-status</span>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="status-dot">
+            <div class="section-header">
+                <span class="tag-badge">.status-dot</span>
+                <span class="section-title">Puntito Verde Pulsante de Estado</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Puntito verde (8x8px) circular con fondo teal. Tiene <span class="css-prop">position: relative</span> para permitir el pseudo-elemento <span class="css-prop">::after</span> que crea el efecto de pulso.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Dentro de <span class="attr-name">.status-indicator</span>, antes del texto "Sistema Local".</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">width</span>: <span class="css-val">8px</span>, <span class="css-prop">height</span>: <span class="css-val">8px</span>, <span class="css-prop">background-color</span>: <span class="css-val">var(--primary)</span>, <span class="css-prop">border-radius</span>: <span class="css-val">50%</span>, <span class="css-prop">position</span>: <span class="css-val">relative</span>, <span class="css-prop">display</span>: <span class="css-val">inline-block</span></div>
+                    <div class="info-label">Pseudo-elemento</div>
+                    <div class="info-value">::after: <span class="css-prop">content</span>: <span class="css-val">''</span>, <span class="css-prop">width</span>: <span class="css-val">100%</span>, <span class="css-prop">height</span>: <span class="css-val">100%</span>, <span class="css-prop">background-color</span>: <span class="css-val">var(--primary)</span>, <span class="css-prop">border-radius</span>: <span class="css-val">50%</span>, <span class="css-prop">position</span>: <span class="css-val">absolute</span>, <span class="css-prop">top</span>: <span class="css-val">0</span>, <span class="css-prop">left</span>: <span class="css-val">0</span>, <span class="css-prop">animation</span>: <span class="css-val">pulse-ring 1.8s cubic-bezier(0.24,0,0.38,1) infinite</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">El punto indica que el sistema está activo. El anillo pulsante (::after) atrae la atención y da sensación de vida.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Dentro de <span class="attr-name">.status-indicator</span>. El ::after usa <span class="attr-name">@keyframes pulse-ring</span>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="theme-toggle">
+            <div class="section-header">
+                <span class="tag-badge">.theme-toggle</span>
+                <span class="section-title">Botón de Cambio de Tema Claro/Oscuro</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Botón circular (40px de diámetro) para cambiar entre tema claro y oscuro. Fondo gris claro, borde gris, iconos centrados. Hover: fondo del color del borde, rotación de 15°.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">A la derecha de <span class="attr-name">.status-indicator</span> dentro de <span class="attr-name">.controls-section</span>.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">background-color</span>: <span class="css-val">var(--bg-primary)</span>, <span class="css-prop">border</span>: <span class="css-val">1px solid var(--border-color)</span>, <span class="css-prop">width</span>: <span class="css-val">40px</span>, <span class="css-prop">height</span>: <span class="css-val">40px</span>, <span class="css-prop">border-radius</span>: <span class="css-val">50%</span>, <span class="css-prop">cursor</span>: <span class="css-val">pointer</span>, <span class="css-prop">display</span>: <span class="css-val">flex</span>, <span class="css-prop">align-items</span>: <span class="css-val">center</span>, <span class="css-prop">justify-content</span>: <span class="css-val">center</span>, <span class="css-prop">color</span>: <span class="css-val">var(--text-main)</span>, <span class="css-prop">transition</span>: <span class="css-val">all var(--transition-fast)</span></div>
+                    <div class="info-label">Hover</div>
+                    <div class="info-value"><span class="css-prop">background-color</span>: <span class="css-val">var(--border-color)</span>, <span class="css-prop">transform</span>: <span class="css-val">rotate(15deg)</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Permite al usuario alternar entre tema claro y oscuro según preferencia o condiciones de luz.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Contiene <span class="attr-name">.icon-sun</span> y <span class="attr-name">.icon-moon</span>. Controlado por JS vía <span class="attr-name">#btn-theme-toggle</span>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="icon-sun">
+            <div class="section-header">
+                <span class="tag-badge">.icon-sun</span>
+                <span class="section-title">Icono SVG del Sol (Modo Oscuro Activo)</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Icono SVG del sol dentro del botón de tema. Oculto por defecto (<span class="css-prop">display: none</span>). Se muestra cuando el tema oscuro está activo (<span class="css-prop">[data-theme="dark"] .icon-sun {display: block}</span>).</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Dentro de <span class="attr-name">.theme-toggle</span>.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">display</span>: <span class="css-val">none</span> (por defecto), <span class="css-prop">width</span>: <span class="css-val">20px</span>, <span class="css-prop">height</span>: <span class="css-val">20px</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Representa visualmente el modo oscuro disponible. Al hacer clic en el botón, se oculta la luna y aparece el sol.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Dentro de <span class="attr-name">.theme-toggle</span>. Se alterna con <span class="attr-name">.icon-moon</span> según el tema.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="icon-moon">
+            <div class="section-header">
+                <span class="tag-badge">.icon-moon</span>
+                <span class="section-title">Icono SVG de la Luna (Modo Claro Activo)</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Icono SVG de la luna dentro del botón de tema. Visible por defecto (modo claro). Se oculta cuando el tema oscuro está activo (<span class="css-prop">[data-theme="dark"] .icon-moon {display: none}</span>).</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Dentro de <span class="attr-name">.theme-toggle</span>.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">display</span>: <span class="css-val">block</span> (por defecto), <span class="css-prop">width</span>: <span class="css-val">20px</span>, <span class="css-prop">height</span>: <span class="css-val">20px</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Representa visualmente el modo claro actual. Al hacer clic en el botón, se oculta la luna y aparece el sol.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Dentro de <span class="attr-name">.theme-toggle</span>. Se alterna con <span class="attr-name">.icon-sun</span> según el tema.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== CATEGORÍA 3: PANEL DE ESTADÍSTICAS ==================== -->
+        <div class="category-divider"><h2>📊 PANEL DE ESTADÍSTICAS</h2></div>
+
+        <div class="section-card" id="stats-grid">
+            <div class="section-header">
+                <span class="tag-badge">.stats-grid</span>
+                <span class="section-title">Grid Responsivo de Estadísticas</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Grid responsivo que distribuye las 4 tarjetas de estadísticas en columnas automáticas. Cada columna tiene un ancho mínimo de 240px y máximo de 1fr (fracción disponible). Si no caben 4 columnas, pone 2, y si no caben 2, pone 1. Gap de 16px entre tarjetas.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value"><span class="tag-name">&lt;section&gt;</span> debajo del header.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">display</span>: <span class="css-val">grid</span>, <span class="css-prop">grid-template-columns</span>: <span class="css-val">repeat(auto-fit, minmax(240px, 1fr))</span>, <span class="css-prop">gap</span>: <span class="css-val">16px</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Muestra las 4 métricas del consultorio de forma compacta y adaptativa. En móvil se apilan verticalmente, en tablet 2x2, en desktop 4 columnas.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Contiene 4 instancias de <span class="attr-name">.stat-card</span>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="stat-card">
+            <div class="section-header">
+                <span class="tag-badge">.stat-card</span>
+                <span class="section-title">Tarjeta Individual de Estadística</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Cada tarjeta individual del panel de estadísticas. Fondo blanco, borde gris, bordes redondeados (12px), padding de 20px. Usa flexbox para distribuir la información (izquierda) y el icono (derecha). Sombra sutil. Hover: se eleva 2px y aumenta la sombra.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">4 instancias dentro de <span class="attr-name">.stats-grid</span>.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">background-color</span>: <span class="css-val">var(--bg-card)</span>, <span class="css-prop">border</span>: <span class="css-val">1px solid var(--border-color)</span>, <span class="css-prop">border-radius</span>: <span class="css-val">var(--radius-md)</span>, <span class="css-prop">padding</span>: <span class="css-val">20px</span>, <span class="css-prop">display</span>: <span class="css-val">flex</span>, <span class="css-prop">align-items</span>: <span class="css-val">center</span>, <span class="css-prop">justify-content</span>: <span class="css-val">space-between</span>, <span class="css-prop">box-shadow</span>: <span class="css-val">var(--shadow-sm)</span></div>
+                    <div class="info-label">Hover</div>
+                    <div class="info-value"><span class="css-prop">transform</span>: <span class="css-val">translateY(-2px)</span>, <span class="css-prop">box-shadow</span>: <span class="css-val">var(--shadow-md)</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Presenta cada métrica (total citas, citas hoy, cita próxima, servicio popular) como una tarjeta independiente con efecto de elevación al pasar el mouse.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Contiene <span class="attr-name">.stat-info</span> (izquierda) y <span class="attr-name">.stat-icon-wrapper</span> (derecha).</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="stat-info">
+            <div class="section-header">
+                <span class="tag-badge">.stat-info</span>
+                <span class="section-title">Información de Estadística (Etiqueta + Valor)</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Apila verticalmente la etiqueta descriptiva (<span class="attr-name">.stat-label</span>) y el valor numérico (<span class="attr-name">.stat-value</span>) de cada métrica con flexbox en columna.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Lado izquierdo de cada <span class="attr-name">.stat-card</span>.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">display</span>: <span class="css-val">flex</span>, <span class="css-prop">flex-direction</span>: <span class="css-val">column</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Organiza el texto de cada métrica (etiqueta arriba, valor abajo) de forma clara y compacta.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Contiene <span class="attr-name">.stat-label</span> y <span class="attr-name">.stat-value</span>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="stat-label">
+            <div class="section-header">
+                <span class="tag-badge">.stat-label</span>
+                <span class="section-title">Etiqueta Descriptiva de Estadística</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Texto descriptivo de cada métrica (ej: "Total Citas Registradas", "Citas para Hoy"). Tamaño 13px, peso 500 (medium), color gris atenuado. Margen inferior de 4px.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Arriba del valor en <span class="attr-name">.stat-info</span> dentro de cada <span class="attr-name">.stat-card</span>.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">font-size</span>: <span class="css-val">13px</span>, <span class="css-prop">font-weight</span>: <span class="css-val">500</span>, <span class="css-prop">color</span>: <span class="css-val">var(--text-muted)</span>, <span class="css-prop">margin-bottom</span>: <span class="css-val">4px</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Identifica qué representa cada número de las estadísticas.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Dentro de <span class="attr-name">.stat-info</span>, encima de <span class="attr-name">.stat-value</span>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="stat-value">
+            <div class="section-header">
+                <span class="tag-badge">.stat-value</span>
+                <span class="section-title">Valor Numérico de Estadística</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Valor numérico grande y destacado de cada métrica. Tamaño 24px, negrita (700), color de texto principal, altura de línea 1 (sin espacio extra).</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Debajo de <span class="attr-name">.stat-label</span> en <span class="attr-name">.stat-info</span> dentro de cada <span class="attr-name">.stat-card</span>.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">font-size</span>: <span class="css-val">24px</span>, <span class="css-prop">font-weight</span>: <span class="css-val">700</span>, <span class="css-prop">color</span>: <span class="css-val">var(--text-main)</span>, <span class="css-prop">line-height</span>: <span class="css-val">1</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Destaca el dato numérico como el elemento más importante de cada tarjeta de estadísticas.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Dentro de <span class="attr-name">.stat-info</span>, debajo de <span class="attr-name">.stat-label</span>. Actualizado dinámicamente por JS vía <span class="attr-name">#stat-total-val</span>, <span class="attr-name">#stat-hoy-val</span>, <span class="attr-name">#stat-proxima-val</span>, <span class="attr-name">#stat-popular-val</span>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="stat-icon-wrapper">
+            <div class="section-header">
+                <span class="tag-badge">.stat-icon-wrapper</span>
+                <span class="section-title">Wrapper de Icono con Color Temático</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Contenedor cuadrado (48x48px) con bordes redondeados (12px) que aloja el icono SVG de cada tarjeta de estadísticas. El icono está centrado y tiene 24px de tamaño.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Lado derecho de cada <span class="attr-name">.stat-card</span>.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">width</span>: <span class="css-val">48px</span>, <span class="css-prop">height</span>: <span class="css-val">48px</span>, <span class="css-prop">border-radius</span>: <span class="css-val">var(--radius-md)</span>, <span class="css-prop">display</span>: <span class="css-val">flex</span>, <span class="css-prop">align-items</span>: <span class="css-val">center</span>, <span class="css-prop">justify-content</span>: <span class="css-val">center</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Proporciona un fondo de color consistente para cada icono de estadística, haciendo que sean visualmente distinguibles.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Contiene un SVG icono. Se combina con <span class="attr-name">.stat-total</span>, <span class="attr-name">.stat-hoy</span>, <span class="attr-name">.stat-proximas</span> o <span class="attr-name">.stat-popular</span> para el color específico.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="stat-total">
+            <div class="section-header">
+                <span class="tag-badge">.stat-total</span>
+                <span class="section-title">Modificador de Color: Total Citas (Teal)</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Modificador de color para el icono de la tarjeta "Total Citas Registradas". Texto e icono en color teal (color de marca #0d9488), fondo teal semitransparente (10% opacidad).</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Aplicado al <span class="attr-name">.stat-icon-wrapper</span> de la primera tarjeta de estadísticas.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">color</span>: <span class="css-val">var(--primary)</span>, <span class="css-prop">background-color</span>: <span class="css-val">var(--primary-light)</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Diferencia visual la métrica principal (total de citas) con el color de marca.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Se aplica sobre <span class="attr-name">.stat-icon-wrapper</span>. Corresponde a la primera tarjeta.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="stat-hoy">
+            <div class="section-header">
+                <span class="tag-badge">.stat-hoy</span>
+                <span class="section-title">Modificador de Color: Citas para Hoy (Sky Blue)</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Modificador de color para el icono de la tarjeta "Citas para Hoy". Texto e icono en color sky blue (#0ea5e9), fondo sky blue semitransparente (10% opacidad).</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Aplicado al <span class="attr-name">.stat-icon-wrapper</span> de la segunda tarjeta de estadísticas.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">color</span>: <span class="css-val">var(--secondary)</span>, <span class="css-prop">background-color</span>: <span class="css-val">rgba(14,165,233,0.1)</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Diferencia visual la métrica de citas de hoy con color azul cielo, asociado a temporalidad/presente.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Se aplica sobre <span class="attr-name">.stat-icon-wrapper</span>. Corresponde a la segunda tarjeta.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="stat-proximas">
+            <div class="section-header">
+                <span class="tag-badge">.stat-proximas</span>
+                <span class="section-title">Modificador de Color: Cita Más Cercana (Índigo)</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Modificador de color para el icono de la tarjeta "Cita Más Cercana". Texto e icono en color índigo (#6366f1), fondo índigo semitransparente (10% opacidad).</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Aplicado al <span class="attr-name">.stat-icon-wrapper</span> de la tercera tarjeta de estadísticas.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">color</span>: <span class="css-val">var(--accent)</span>, <span class="css-prop">background-color</span>: <span class="css-val">rgba(99,102,241,0.1)</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Diferencia visual la métrica de cita próxima con color índigo, asociado a proximidad/futuro.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Se aplica sobre <span class="attr-name">.stat-icon-wrapper</span>. Corresponde a la tercera tarjeta.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="stat-popular">
+            <div class="section-header">
+                <span class="tag-badge">.stat-popular</span>
+                <span class="section-title">Modificador de Color: Servicio Más Solicitado (Ámbar)</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Modificador de color para el icono de la tarjeta "Servicio Más Solicitado". Texto e icono en color ámbar (#f59e0b), fondo ámbar semitransparente (10% opacidad).</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Aplicado al <span class="attr-name">.stat-icon-wrapper</span> de la cuarta tarjeta de estadísticas.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">color</span>: <span class="css-val">var(--warning)</span>, <span class="css-prop">background-color</span>: <span class="css-val">var(--warning-light)</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Diferencia visual la métrica de servicio popular con color ámbar, asociado a destacado/alerta.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Se aplica sobre <span class="attr-name">.stat-icon-wrapper</span>. Corresponde a la cuarta tarjeta.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== CATEGORÍA 4: LAYOUT PRINCIPAL ==================== -->
+        <div class="category-divider"><h2>⚡ LAYOUT PRINCIPAL</h2></div>
+
+        <div class="section-card" id="main-grid">
+            <div class="section-header">
+                <span class="tag-badge">.main-grid</span>
+                <span class="section-title">Grid Principal de Dos Columnas</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Crea el layout de dos columnas: izquierda de 360px fijo (formulario) y derecha que ocupa el resto (lista de citas). Usa <span class="css-prop">align-items: start</span> para que ambas columnas inicien desde arriba. En pantallas menores a 992px se apila en una sola columna (<span class="css-prop">grid-template-columns: 1fr</span>).</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value"><span class="tag-name">&lt;main&gt;</span> que contiene ambas secciones (formulario y lista).</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">display</span>: <span class="css-val">grid</span>, <span class="css-prop">grid-template-columns</span>: <span class="css-val">360px 1fr</span>, <span class="css-prop">gap</span>: <span class="css-val">24px</span>, <span class="css-prop">align-items</span>: <span class="css-val">start</span>, <span class="css-prop">flex-grow</span>: <span class="css-val">1</span></div>
+                    <div class="info-label">Media query</div>
+                    <div class="info-value">@media (max-width: 992px) { <span class="css-prop">grid-template-columns</span>: <span class="css-val">1fr</span> }</div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Organiza el espacio en dos áreas funcionales: creación de citas (izquierda) y gestión de citas (derecha). El diseño de 360px fijo mantiene el formulario compacto.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Contiene dos <span class="attr-name">.panel-card</span> (formulario y lista).</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="panel-card">
+            <div class="section-header">
+                <span class="tag-badge">.panel-card</span>
+                <span class="section-title">Tarjeta Contenedora de Panel</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Estilo de "tarjeta contenedora" reutilizado para ambos paneles principales. Fondo blanco, borde gris, bordes redondeados (12px), padding de 24px, sombra sutil. Usa flexbox en columna con 20px de separación entre elementos.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Ambas <span class="tag-name">&lt;section&gt;</span> dentro de <span class="attr-name">.main-grid</span> (formulario de creación y lista de citas).</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">background-color</span>: <span class="css-val">var(--bg-card)</span>, <span class="css-prop">border</span>: <span class="css-val">1px solid var(--border-color)</span>, <span class="css-prop">border-radius</span>: <span class="css-val">var(--radius-md)</span>, <span class="css-prop">padding</span>: <span class="css-val">24px</span>, <span class="css-prop">box-shadow</span>: <span class="css-val">var(--shadow-sm)</span>, <span class="css-prop">display</span>: <span class="css-val">flex</span>, <span class="css-prop">flex-direction</span>: <span class="css-val">column</span>, <span class="css-prop">gap</span>: <span class="css-val">20px</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Unifica visualmente ambos paneles (formulario y lista) con el mismo estilo de tarjeta, creando consistencia visual.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Contiene <span class="attr-name">.panel-header</span> y <span class="attr-name">.appointment-form</span> (panel izquierdo) o <span class="attr-name">.filter-actions-bar</span> + <span class="attr-name">#lista-citas</span> (panel derecho).</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="panel-header">
+            <div class="section-header">
+                <span class="tag-badge">.panel-header</span>
+                <span class="section-title">Cabecera del Panel con Icono y Título</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Cabecera de cada panel con icono SVG (22px, color teal) + título en negrita (16px), alineados horizontalmente con 12px de separación. Borde inferior divisorio gris, padding inferior de 12px.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Dentro de cada <span class="attr-name">.panel-card</span> (formulario y lista).</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">display</span>: <span class="css-val">flex</span>, <span class="css-prop">align-items</span>: <span class="css-val">center</span>, <span class="css-prop">gap</span>: <span class="css-val">12px</span>, <span class="css-prop">border-bottom</span>: <span class="css-val">1px solid var(--border-color)</span>, <span class="css-prop">padding-bottom</span>: <span class="css-val">12px</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Identifica visualmente qué hace cada panel ("Agendar Nueva Cita" y "Lista de Citas").</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Dentro de <span class="attr-name">.panel-card</span>. Contiene SVG icono y <span class="tag-name">&lt;h2&gt;</span>.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== CATEGORÍA 5: FORMULARIO ==================== -->
+        <div class="category-divider"><h2>📝 FORMULARIO</h2></div>
+
+        <div class="section-card" id="appointment-form">
+            <div class="section-header">
+                <span class="tag-badge">.appointment-form</span>
+                <span class="section-title">Layout del Formulario de Citas</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Organiza los campos del formulario (tanto de creación como de edición) en una columna vertical con un espacio de 16px entre cada campo. Es el layout base para ambos formularios.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value"><span class="tag-name">&lt;form id="cita-form"&gt;</span> (panel izquierdo) y <span class="tag-name">&lt;form id="edit-form"&gt;</span> (dentro del modal).</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">display</span>: <span class="css-val">flex</span>, <span class="css-prop">flex-direction</span>: <span class="css-val">column</span>, <span class="css-prop">gap</span>: <span class="css-val">16px</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Mantiene los campos del formulario apilados verticalmente de forma consistente tanto en el formulario de creación como en el de edición.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Contiene múltiples <span class="attr-name">.form-group</span> y un <span class="attr-name">.btn-primary</span> (o <span class="attr-name">.modal-footer</span> en el formulario de edición).</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="form-group">
+            <div class="section-header">
+                <span class="tag-badge">.form-group</span>
+                <span class="section-title">Grupo de Campo del Formulario (Label + Input)</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Agrupa cada etiqueta (<span class="tag-name">&lt;label&gt;</span>) con su campo de entrada (<span class="tag-name">&lt;input&gt;</span> o <span class="tag-name">&lt;select&gt;</span>) en una columna vertical con 6px de separación. Es la unidad básica de cada campo del formulario.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">5 instancias dentro de cada <span class="attr-name">.appointment-form</span> (paciente, servicio, fecha, hora, y el botón que está en su propio grupo).</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">display</span>: <span class="css-val">flex</span>, <span class="css-prop">flex-direction</span>: <span class="css-val">column</span>, <span class="css-prop">gap</span>: <span class="css-val">6px</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Mantiene cada campo del formulario como una unidad visual cohesiva (label + input + posible hint de validación).</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Contiene <span class="tag-name">&lt;label&gt;</span>, <span class="attr-name">.input-container</span> (o <span class="tag-name">&lt;select&gt;</span> directamente), y posiblemente <span class="attr-name">.validation-hint</span>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="input-container">
+            <div class="section-header">
+                <span class="tag-badge">.input-container</span>
+                <span class="section-title">Contenedor de Input con Icono Posicionado</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Contenedor con <span class="css-prop">position: relative</span> que permite posicionar un icono SVG de forma absoluta a la izquierda del input. El icono está centrado verticalmente y tiene <span class="css-prop">pointer-events: none</span> para no interferir con el clic en el input.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Dentro de cada <span class="attr-name">.form-group</span> que tiene un input con icono (paciente, fecha, hora, y buscador).</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">position</span>: <span class="css-val">relative</span></div>
+                    <div class="info-label">Icono SVG dentro</div>
+                    <div class="info-value"><span class="css-prop">position</span>: <span class="css-val">absolute</span>, <span class="css-prop">left</span>: <span class="css-val">12px</span>, <span class="css-prop">top</span>: <span class="css-val">50%</span>, <span class="css-prop">transform</span>: <span class="css-val">translateY(-50%)</span>, <span class="css-prop">width</span>: <span class="css-val">18px</span>, <span class="css-prop">height</span>: <span class="css-val">18px</span>, <span class="css-prop">color</span>: <span class="css-val">var(--text-light)</span>, <span class="css-prop">pointer-events</span>: <span class="css-val">none</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Permite colocar iconos decorativos dentro de los inputs sin afectar su funcionalidad. El padding izquierdo de 38px en <span class="attr-name">.form-input</span> deja espacio para este icono.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Contiene un SVG icono y un <span class="attr-name">.form-input</span>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="form-input">
+            <div class="section-header">
+                <span class="tag-badge">.form-input</span>
+                <span class="section-title">Estilo Base de Inputs y Selects</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Estilo base unificado para TODOS los campos de entrada (texto, fecha, hora) y selects. Ancho completo, padding de 10px arriba/abajo y 12px derecha / 38px izquierda (espacio para icono), borde gris, fondo gris muy claro, color de texto principal. Al hacer focus: borde teal, sombra teal.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Todos los <span class="tag-name">&lt;input&gt;</span> y <span class="tag-name">&lt;select&gt;</span> de los formularios (creación y edición).</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">width</span>: <span class="css-val">100%</span>, <span class="css-prop">padding</span>: <span class="css-val">10px 12px 10px 38px</span>, <span class="css-prop">border</span>: <span class="css-val">1px solid var(--border-color)</span>, <span class="css-prop">border-radius</span>: <span class="css-val">var(--radius-sm)</span>, <span class="css-prop">background-color</span>: <span class="css-val">var(--bg-primary)</span>, <span class="css-prop">color</span>: <span class="css-val">var(--text-main)</span>, <span class="css-prop">font-size</span>: <span class="css-val">14px</span>, <span class="css-prop">outline</span>: <span class="css-val">none</span></div>
+                    <div class="info-label">Focus</div>
+                    <div class="info-value"><span class="css-prop">border-color</span>: <span class="css-val">var(--primary)</span>, <span class="css-prop">box-shadow</span>: <span class="css-val">0 0 0 3px rgba(13,148,136,0.15)</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Proporciona un estilo consistente para todos los campos de entrada. El padding izquierdo de 38px deja espacio para el icono SVG posicionado por <span class="attr-name">.input-container</span>.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Dentro de <span class="attr-name">.input-container</span> (cuando tiene icono) o directamente en <span class="attr-name">.form-group</span> (para selects). El selector <span class="css-prop">select.form-input</span> tiene estilos adicionales para la flecha personalizada.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="validation-hint">
+            <div class="section-header">
+                <span class="tag-badge">.validation-hint</span>
+                <span class="section-title">Mensaje de Validación</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Mensaje informativo pequeño (11px) que aparece debajo de los inputs. Usa flexbox para alinear un icono SVG pequeño (12px) con el texto. Margen superior de 4px. Color gris por defecto.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Debajo del input de fecha (<span class="attr-name">#fecha-warning</span>) y del input de fecha en edición (<span class="attr-name">#edit-fecha-warning</span>).</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">font-size</span>: <span class="css-val">11px</span>, <span class="css-prop">color</span>: <span class="css-val">var(--text-muted)</span>, <span class="css-prop">display</span>: <span class="css-val">flex</span>, <span class="css-prop">align-items</span>: <span class="css-val">center</span>, <span class="css-prop">gap</span>: <span class="css-val">4px</span>, <span class="css-prop">margin-top</span>: <span class="css-val">4px</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Proporciona feedback inmediato al usuario sobre validaciones (ej: "No se atienden fines de semana") sin interrumpir el flujo.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Puede tener <span class="attr-name">.warning</span> para color ámbar. Contiene SVG icono y <span class="tag-name">&lt;span&gt;</span>. Controlada por JS.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="warning">
+            <div class="section-header">
+                <span class="tag-badge">.warning</span>
+                <span class="section-title">Modificador de Advertencia (Ámbar)</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Modificador que cambia el color del texto de <span class="attr-name">.validation-hint</span> a ámbar (#f59e0b), indicando una advertencia.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Aplicada al <span class="attr-name">.validation-hint</span> debajo del input de fecha cuando se selecciona fin de semana.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">color</span>: <span class="css-val">var(--warning)</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Destaca visualmente que la fecha seleccionada es un fin de semana y el consultorio no atiende esos días.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Se aplica sobre <span class="attr-name">.validation-hint</span>. Añadida/eliminada por JS según la fecha seleccionada.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== CATEGORÍA 6: BOTONES ==================== -->
+        <div class="category-divider"><h2>🔘 BOTONES</h2></div>
+
+        <div class="section-card" id="btn-primary">
+            <div class="section-header">
+                <span class="tag-badge">.btn-primary</span>
+                <span class="section-title">Botón Principal de Acción</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Botón principal de acción de la aplicación. Fondo teal (color de marca), texto blanco, ancho completo (100%), bordes redondeados, sombra sutil. Contiene icono SVG + texto centrados. Hover: fondo más oscuro, sombra más grande, se eleva 1px. Active (clic): vuelve a posición original.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Botón "Guardar Cita" al final del formulario de creación, y botón "Actualizar Cita" en el modal de edición.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">width</span>: <span class="css-val">100%</span>, <span class="css-prop">padding</span>: <span class="css-val">12px</span>, <span class="css-prop">background-color</span>: <span class="css-val">var(--primary)</span>, <span class="css-prop">color</span>: <span class="css-val">#ffffff</span>, <span class="css-prop">border</span>: <span class="css-val">none</span>, <span class="css-prop">border-radius</span>: <span class="css-val">var(--radius-sm)</span>, <span class="css-prop">font-weight</span>: <span class="css-val">700</span>, <span class="css-prop">display</span>: <span class="css-val">flex</span>, <span class="css-prop">align-items</span>: <span class="css-val">center</span>, <span class="css-prop">justify-content</span>: <span class="css-val">center</span>, <span class="css-prop">gap</span>: <span class="css-val">8px</span>, <span class="css-prop">box-shadow</span>: <span class="css-val">var(--shadow-sm)</span></div>
+                    <div class="info-label">Hover</div>
+                    <div class="info-value"><span class="css-prop">transform</span>: <span class="css-val">translateY(-1px)</span>, <span class="css-prop">box-shadow</span>: <span class="css-val">var(--shadow-md)</span></div>
+                    <div class="info-label">Active</div>
+                    <div class="info-value"><span class="css-prop">transform</span>: <span class="css-val">translateY(0)</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Es la acción principal de la página (guardar/actualizar citas). Destaca visualmente con el color de marca y efectos de elevación.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Dentro de <span class="attr-name">.appointment-form</span>. Controlado por JS vía <span class="attr-name">#btn-submit-form</span>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="btn-secondary">
+            <div class="section-header">
+                <span class="tag-badge">.btn-secondary</span>
+                <span class="section-title">Botón Secundario Base</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Estilo base para botones secundarios. Fondo gris claro, borde gris, texto oscuro, bordes redondeados. Contiene icono SVG + texto. Hover: fondo del color del borde.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Base para <span class="attr-name">.btn-export</span> y <span class="attr-name">.btn-danger-outline</span> en <span class="attr-name">.action-buttons-group</span>, y para el botón "Cancelar" en <span class="attr-name">.modal-footer</span> y <span class="attr-name">.confirm-actions</span>.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">padding</span>: <span class="css-val">10px 16px</span>, <span class="css-prop">background-color</span>: <span class="css-val">var(--bg-primary)</span>, <span class="css-prop">color</span>: <span class="css-val">var(--text-main)</span>, <span class="css-prop">border</span>: <span class="css-val">1px solid var(--border-color)</span>, <span class="css-prop">border-radius</span>: <span class="css-val">var(--radius-sm)</span>, <span class="css-prop">font-weight</span>: <span class="css-val">600</span>, <span class="css-prop">display</span>: <span class="css-val">flex</span>, <span class="css-prop">align-items</span>: <span class="css-val">center</span>, <span class="css-prop">gap</span>: <span class="css-val">8px</span></div>
+                    <div class="info-label">Hover</div>
+                    <div class="info-value"><span class="css-prop">background-color</span>: <span class="css-val">var(--border-color)</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Proporciona un estilo consistente para botones de acción secundaria que no son la acción principal de la página.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Es la base que extienden <span class="attr-name">.btn-export</span> y <span class="attr-name">.btn-danger-outline</span>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="btn-export">
+            <div class="section-header">
+                <span class="tag-badge">.btn-export</span>
+                <span class="section-title">Botón Exportar Reporte CSV (Verde)</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Variante del botón secundario para exportar datos. Borde verde claro (30% opacidad), texto verde, fondo verde muy claro. Hover: se convierte en botón verde sólido con texto blanco y sombra verde.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Botón "Exportar Reporte" dentro de <span class="attr-name">.action-buttons-group</span>.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">border-color</span>: <span class="css-val">rgba(16,185,129,0.3)</span>, <span class="css-prop">color</span>: <span class="css-val">var(--success)</span>, <span class="css-prop">background-color</span>: <span class="css-val">var(--success-light)</span></div>
+                    <div class="info-label">Hover</div>
+                    <div class="info-value"><span class="css-prop">background-color</span>: <span class="css-val">var(--success)</span>, <span class="css-prop">color</span>: <span class="css-val">#fff</span>, <span class="css-prop">box-shadow</span>: <span class="css-val">0 4px 6px rgba(16,185,129,0.15)</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Indica que es una acción positiva (exportar/generar reporte) con código de color verde asociado a éxito.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Extiende <span class="attr-name">.btn-secondary</span>. Controlado por JS vía <span class="attr-name">#exportar-btn</span>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="btn-danger-outline">
+            <div class="section-header">
+                <span class="tag-badge">.btn-danger-outline</span>
+                <span class="section-title">Botón Limpiar Todo (Rojo Outline)</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Variante del botón secundario para acciones destructivas. Borde rojo claro (30% opacidad), texto rojo, fondo rojo muy claro. Hover: se convierte en botón rojo sólido con texto blanco.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Botón "Limpiar Todo" dentro de <span class="attr-name">.action-buttons-group</span>.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">border-color</span>: <span class="css-val">rgba(239,68,68,0.3)</span>, <span class="css-prop">color</span>: <span class="css-val">var(--error)</span>, <span class="css-prop">background-color</span>: <span class="css-val">var(--error-light)</span></div>
+                    <div class="info-label">Hover</div>
+                    <div class="info-value"><span class="css-prop">background-color</span>: <span class="css-val">var(--error)</span>, <span class="css-prop">color</span>: <span class="css-val">#ffffff</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Indica que es una acción destructiva (eliminar TODAS las citas) pero con estilo de "outline" para no ser tan agresivo visualmente como <span class="attr-name">.btn-danger</span>.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Extiende <span class="attr-name">.btn-secondary</span>. Controlado por JS vía <span class="attr-name">#btn-limpiar-todo</span>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="btn-danger">
+            <div class="section-header">
+                <span class="tag-badge">.btn-danger</span>
+                <span class="section-title">Botón Confirmar Eliminación (Rojo Sólido)</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Botón de acción destructiva (confirmar eliminación). Fondo rojo sólido, texto blanco, bordes redondeados, padding de 10px, texto en negrita. Hover: rojo más oscuro.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Botón "Eliminar" dentro de <span class="attr-name">.confirm-actions</span> en el diálogo de confirmación.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">background-color</span>: <span class="css-val">var(--error)</span>, <span class="css-prop">color</span>: <span class="css-val">#ffffff</span>, <span class="css-prop">border</span>: <span class="css-val">none</span>, <span class="css-prop">border-radius</span>: <span class="css-val">var(--radius-sm)</span>, <span class="css-prop">padding</span>: <span class="css-val">10px</span>, <span class="css-prop">font-weight</span>: <span class="css-val">700</span>, <span class="css-prop">cursor</span>: <span class="css-val">pointer</span></div>
+                    <div class="info-label">Hover</div>
+                    <div class="info-value"><span class="css-prop">background-color</span>: <span class="css-val">#dc2626</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Destaca visualmente que es una acción irreversible (eliminar datos). El color rojo alerta al usuario.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Dentro de <span class="attr-name">.confirm-actions</span>. Controlado por JS vía <span class="attr-name">#btn-confirm-accept</span>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="btn-icon">
+            <div class="section-header">
+                <span class="tag-badge">.btn-icon</span>
+                <span class="section-title">Botón Icono Cuadrado Compacto</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Botón cuadrado compacto (36x36px) con fondo gris claro, borde gris, icono gris. Base para los botones de editar y eliminar en cada tarjeta de cita.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Dos instancias por tarjeta dentro de <span class="attr-name">.card-actions</span> (editar y eliminar).</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">width</span>: <span class="css-val">36px</span>, <span class="css-prop">height</span>: <span class="css-val">36px</span>, <span class="css-prop">border</span>: <span class="css-val">1px solid var(--border-color)</span>, <span class="css-prop">background-color</span>: <span class="css-val">var(--bg-primary)</span>, <span class="css-prop">border-radius</span>: <span class="css-val">var(--radius-sm)</span>, <span class="css-prop">cursor</span>: <span class="css-val">pointer</span>, <span class="css-prop">color</span>: <span class="css-val">var(--text-muted)</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Proporciona botones compactos para acciones individuales en cada tarjeta sin ocupar mucho espacio.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Base para <span class="attr-name">.btn-icon-edit:hover</span> y <span class="attr-name">.btn-icon-delete:hover</span>. Contiene un SVG icono.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="btn-icon-edit">
+            <div class="section-header">
+                <span class="tag-badge">.btn-icon-edit</span>
+                <span class="section-title">Hover del Botón Editar (Teal)</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Esta clase NO tiene estilos propios en el CSS. Solo existe como selector para el estado <span class="css-prop">:hover</span>. Al pasar el mouse sobre editar: fondo verde claro, icono verde, borde verde.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Aplicada al botón de editar dentro de <span class="attr-name">.card-actions</span>.</div>
+                    <div class="info-label">Hover</div>
+                    <div class="info-value"><span class="css-prop">background-color</span>: <span class="css-val">var(--primary-light)</span>, <span class="css-prop">color</span>: <span class="css-val">var(--primary)</span>, <span class="css-prop">border-color</span>: <span class="css-val">var(--primary)</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Al pasar el mouse sobre el botón de editar, se pone teal para indicar que es una acción de edición.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Se aplica sobre <span class="attr-name">.btn-icon</span>. Controlado por JS para abrir <span class="attr-name">.modal-overlay</span> con datos de la cita.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="btn-icon-delete">
+            <div class="section-header">
+                <span class="tag-badge">.btn-icon-delete</span>
+                <span class="section-title">Hover del Botón Eliminar (Rojo)</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Esta clase NO tiene estilos propios en el CSS. Solo existe como selector para el estado <span class="css-prop">:hover</span>. Al pasar el mouse sobre eliminar: fondo rojo claro, icono rojo, borde rojo.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Aplicada al botón de eliminar dentro de <span class="attr-name">.card-actions</span>.</div>
+                    <div class="info-label">Hover</div>
+                    <div class="info-value"><span class="css-prop">background-color</span>: <span class="css-val">var(--error-light)</span>, <span class="css-prop">color</span>: <span class="css-val">var(--error)</span>, <span class="css-prop">border-color</span>: <span class="css-val">var(--error)</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Al pasar el mouse sobre el botón de eliminar, se pone rojo para indicar que es una acción destructiva.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Se aplica sobre <span class="attr-name">.btn-icon</span>. Controlado por JS para abrir <span class="attr-name">.confirm-modal-overlay</span>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="btn-close">
+            <div class="section-header">
+                <span class="tag-badge">.btn-close</span>
+                <span class="section-title">Botón de Cierre del Modal (×)</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Botón de cierre del modal de edición. Muestra el símbolo "×". Sin fondo ni borde inicialmente, forma circular (28px), texto gris. Al pasar el mouse aparece fondo gris claro y texto oscuro.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Esquina superior derecha del <span class="attr-name">.modal-header</span>.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">background</span>: <span class="css-val">none</span>, <span class="css-prop">border</span>: <span class="css-val">none</span>, <span class="css-prop">cursor</span>: <span class="css-val">pointer</span>, <span class="css-prop">color</span>: <span class="css-val">var(--text-muted)</span>, <span class="css-prop">width</span>: <span class="css-val">28px</span>, <span class="css-prop">height</span>: <span class="css-val">28px</span>, <span class="css-prop">border-radius</span>: <span class="css-val">50%</span></div>
+                    <div class="info-label">Hover</div>
+                    <div class="info-value"><span class="css-prop">background-color</span>: <span class="css-val">var(--bg-primary)</span>, <span class="css-prop">color</span>: <span class="css-val">var(--text-main)</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Permite cerrar el modal de edición sin guardar cambios.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Dentro de <span class="attr-name">.modal-header</span>. Controlado por JS vía <span class="attr-name">#btn-close-modal</span>.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== CATEGORÍA 7: BÚSQUEDA Y ACCIONES ==================== -->
+        <div class="category-divider"><h2>🔍 BÚSQUEDA Y ACCIONES</h2></div>
+
+        <div class="section-card" id="filter-actions-bar">
+            <div class="section-header">
+                <span class="tag-badge">.filter-actions-bar</span>
+                <span class="section-title">Barra de Filtros y Acciones</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Barra horizontal superior del panel de lista que distribuye el buscador a la izquierda y los botones de acción a la derecha. Usa flexbox con <span class="css-prop">justify-content: space-between</span> y permite wrap si no cabe.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Parte superior del panel derecho (lista de citas), antes de <span class="attr-name">#lista-citas</span>.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">display</span>: <span class="css-val">flex</span>, <span class="css-prop">gap</span>: <span class="css-val">16px</span>, <span class="css-prop">align-items</span>: <span class="css-val">center</span>, <span class="css-prop">justify-content</span>: <span class="css-val">space-between</span>, <span class="css-prop">flex-wrap</span>: <span class="css-val">wrap</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Agrupa las herramientas de filtrado (búsqueda) y acción (exportar/limpiar) en una barra organizada.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Contiene <span class="attr-name">.search-wrapper</span> (izquierda) y <span class="attr-name">.action-buttons-group</span> (derecha).</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="search-wrapper">
+            <div class="section-header">
+                <span class="tag-badge">.search-wrapper</span>
+                <span class="section-title">Contenedor del Campo de Búsqueda</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Contenedor del campo de búsqueda que puede crecer (<span class="css-prop">flex-grow: 1</span>) hasta un ancho máximo de 400px.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Lado izquierdo de <span class="attr-name">.filter-actions-bar</span>.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">flex-grow</span>: <span class="css-val">1</span>, <span class="css-prop">max-width</span>: <span class="css-val">400px</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Permite que el buscador ocupe el espacio disponible sin desbordarse ni quedar muy pequeño.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Contiene <span class="attr-name">.input-container</span> con el campo <span class="attr-name">#buscador</span>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="action-buttons-group">
+            <div class="section-header">
+                <span class="tag-badge">.action-buttons-group</span>
+                <span class="section-title">Grupo de Botones de Acción</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Agrupa horizontalmente los botones de acción (Exportar y Limpiar Todo) con un espacio de 10px entre ellos.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Dentro de <span class="attr-name">.filter-actions-bar</span>, lado derecho.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">display</span>: <span class="css-val">flex</span>, <span class="css-prop">gap</span>: <span class="css-val">10px</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Mantiene los botones separados del buscador y organizados juntos.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Contiene instancias de <span class="attr-name">.btn-secondary</span> (<span class="attr-name">.btn-export</span> y <span class="attr-name">.btn-danger-outline</span>).</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== CATEGORÍA 8: TARJETAS DE CITAS ==================== -->
+        <div class="category-divider"><h2>📋 TARJETAS DE CITAS</h2></div>
+
+        <div class="section-card" id="appointments-container">
+            <div class="section-header">
+                <span class="tag-badge">.appointments-container</span>
+                <span class="section-title">Contenedor de Lista de Citas</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Es el contenedor vertical que aloja todas las tarjetas de citas. Usa flexbox en columna con 12px de separación entre cada tarjeta. Tiene una altura mínima de 200px para que no se vea vacío cuando no hay citas.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value"><span class="tag-name">&lt;div id="lista-citas" class="appointments-container"&gt;</span> en el panel derecho.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">display</span>: <span class="css-val">flex</span>, <span class="css-prop">flex-direction</span>: <span class="css-val">column</span>, <span class="css-prop">gap</span>: <span class="css-val">12px</span>, <span class="css-prop">min-height</span>: <span class="css-val">200px</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Organiza la lista de citas de forma vertical y espaciada. La altura mínima evita que el contenedor colapse cuando está vacío (antes de mostrar <span class="attr-name">.empty-state</span>).</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Contiene dinámicamente <span class="attr-name">.appointment-card</span> o <span class="attr-name">.empty-state</span>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="appointment-card">
+            <div class="section-header">
+                <span class="tag-badge">.appointment-card</span>
+                <span class="section-title">Tarjeta Individual de Cita</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Es la tarjeta individual que representa una cita registrada. Usa CSS Grid con 2 columnas (información a la izquierda, botones a la derecha). Tiene una barra de color de 5px en el lado izquierdo que indica el tipo de servicio. Tiene animación de entrada (slide-up) y efecto hover que escala ligeramente la tarjeta y aumenta la sombra.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Inyectada dinámicamente por app.js dentro de <span class="attr-name">#lista-citas</span> / <span class="attr-name">.appointments-container</span>.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">display</span>: <span class="css-val">grid</span>, <span class="css-prop">grid-template-columns</span>: <span class="css-val">1fr auto</span>, <span class="css-prop">position</span>: <span class="css-val">relative</span>, <span class="css-prop">overflow</span>: <span class="css-val">hidden</span>, <span class="css-prop">animation</span>: <span class="css-val">slide-up 0.3s</span>, <span class="css-prop">border-radius</span>: <span class="css-val">var(--radius-md)</span>, <span class="css-prop">border</span>: <span class="css-val">1px solid var(--border-color)</span></div>
+                    <div class="info-label">Pseudo-elemento ::before</div>
+                    <div class="info-value">Crea una barra vertical de 5px en el lado izquierdo cuyo color cambia según la clase de servicio.</div>
+                    <div class="info-label">Hover</div>
+                    <div class="info-value"><span class="css-prop">transform</span>: <span class="css-val">scale(1.008)</span>, <span class="css-prop">box-shadow</span>: <span class="css-val">var(--shadow-md)</span>, <span class="css-prop">border-color</span>: <span class="css-val">var(--text-light)</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Presenta cada cita como una tarjeta independiente, identificable por color según el servicio, con acciones de editar/eliminar.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Contiene <span class="attr-name">.card-info</span> (izquierda) y <span class="attr-name">.card-actions</span> (derecha). Puede tener clases <span class="attr-name">.service-*</span> para el color de la barra lateral.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="service-limpieza">
+            <div class="section-header">
+                <span class="tag-badge">.service-*</span>
+                <span class="section-title">Modificadores de Color de Servicio (Barra Lateral)</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Modificadores que cambian el color de la barra lateral (::before) de la tarjeta de cita a verde, morado, naranja o azul respectivamente, indicando el tipo de servicio.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Añadidas dinámicamente a <span class="attr-name">.appointment-card</span> cuando el servicio es el correspondiente.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">.appointment-card.service-xxx::before</span> { <span class="css-prop">background-color</span>: <span class="css-val">var(--badge-xxx)</span> }</div>
+                    <div class="info-label">Variantes</div>
+                    <div class="info-value"><span class="attr-name">.service-limpieza</span> (verde), <span class="attr-name">.service-ortodoncia</span> (morado), <span class="attr-name">.service-extraccion</span> (naranja), <span class="attr-name">.service-evaluacion</span> (azul)</div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Código de color para identificar rápidamente las citas de cada tipo de servicio mediante la barra lateral.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Se aplica sobre <span class="attr-name">.appointment-card</span>. Corresponde con <span class="attr-name">.badge-xxx</span> del mismo servicio.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="card-info">
+            <div class="section-header">
+                <span class="tag-badge">.card-info</span>
+                <span class="section-title">Información de la Cita</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Apila verticalmente el nombre del paciente (<span class="attr-name">.patient-name</span>) y los detalles (<span class="attr-name">.card-details</span>) con 6px de separación. Ocupa la columna izquierda de la tarjeta.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Lado izquierdo de cada <span class="attr-name">.appointment-card</span>.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">display</span>: <span class="css-val">flex</span>, <span class="css-prop">flex-direction</span>: <span class="css-val">column</span>, <span class="css-prop">gap</span>: <span class="css-val">6px</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Organiza la información de la cita en una columna vertical dentro de la tarjeta.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Contiene <span class="attr-name">.patient-name</span> y <span class="attr-name">.card-details</span>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="patient-name">
+            <div class="section-header">
+                <span class="tag-badge">.patient-name</span>
+                <span class="section-title">Nombre del Paciente en Tarjeta</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Nombre del paciente en la tarjeta de cita. Texto de 16px, negrita, color de texto principal, con ligero ajuste de espaciado entre letras.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Primera línea dentro de <span class="attr-name">.card-info</span> en cada <span class="attr-name">.appointment-card</span>.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">font-size</span>: <span class="css-val">16px</span>, <span class="css-prop">font-weight</span>: <span class="css-val">700</span>, <span class="css-prop">color</span>: <span class="css-val">var(--text-main)</span>, <span class="css-prop">letter-spacing</span>: <span class="css-val">-0.01em</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Destaca el nombre del paciente como el dato más importante de cada cita.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Dentro de <span class="attr-name">.card-info</span>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="card-details">
+            <div class="section-header">
+                <span class="tag-badge">.card-details</span>
+                <span class="section-title">Detalles de la Cita (Fecha, Hora, Servicio)</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Fila horizontal que muestra los detalles de la cita (fecha, hora, servicio). Si no caben en una línea, hace wrap automático. Texto pequeño (12px) y gris.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Dentro de <span class="attr-name">.card-info</span>, debajo del nombre del paciente.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">display</span>: <span class="css-val">flex</span>, <span class="css-prop">flex-wrap</span>: <span class="css-val">wrap</span>, <span class="css-prop">gap</span>: <span class="css-val">14px</span>, <span class="css-prop">font-size</span>: <span class="css-val">12px</span>, <span class="css-prop">color</span>: <span class="css-val">var(--text-muted)</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Muestra la información de la cita (fecha, hora, servicio) de forma compacta y organizada.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Contiene múltiples <span class="attr-name">.detail-item</span> y un <span class="attr-name">.badge</span>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="detail-item">
+            <div class="section-header">
+                <span class="tag-badge">.detail-item</span>
+                <span class="section-title">Item Individual de Detalle (Icono + Texto)</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Cada detalle individual de la cita (fecha, hora, servicio) mostrado como icono SVG + texto, alineados horizontalmente con 6px de gap.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Dentro de <span class="attr-name">.card-details</span> en cada <span class="attr-name">.appointment-card</span>.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">display</span>: <span class="css-val">flex</span>, <span class="css-prop">align-items</span>: <span class="css-val">center</span>, <span class="css-prop">gap</span>: <span class="css-val">6px</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Presenta cada dato (fecha, hora) con su icono correspondiente de forma compacta y legible.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Contiene SVG icono (14px) + texto.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="badge">
+            <div class="section-header">
+                <span class="tag-badge">.badge</span>
+                <span class="section-title">Etiqueta de Servicio (Píldora)</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Estilo base para las etiquetas de servicio que aparecen en cada tarjeta de cita. Forma de píldora (bordes completamente redondeados), texto en mayúsculas, letras pequeñas (11px), fondo semitransparente, negrita.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Dentro de <span class="attr-name">.card-details</span> en cada <span class="attr-name">.appointment-card</span>, mostrando el tipo de servicio.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">display</span>: <span class="css-val">inline-flex</span>, <span class="css-prop">align-items</span>: <span class="css-val">center</span>, <span class="css-prop">padding</span>: <span class="css-val">2px 8px</span>, <span class="css-prop">border-radius</span>: <span class="css-val">9999px</span>, <span class="css-prop">font-size</span>: <span class="css-val">11px</span>, <span class="css-prop">font-weight</span>: <span class="css-val">700</span>, <span class="css-prop">text-transform</span>: <span class="css-val">uppercase</span>, <span class="css-prop">letter-spacing</span>: <span class="css-val">0.05em</span>, <span class="css-prop">width</span>: <span class="css-val">fit-content</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Identifica visualmente el tipo de servicio de cada cita de forma compacta y elegante.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Se combina con <span class="attr-name">.badge-limpieza</span>, <span class="attr-name">.badge-ortodoncia</span>, <span class="attr-name">.badge-extraccion</span> o <span class="attr-name">.badge-evaluacion</span> para el color.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="badge-limpieza">
+            <div class="section-header">
+                <span class="tag-badge">.badge-*</span>
+                <span class="section-title">Modificadores de Color del Badge</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Modificadores de color para el badge de servicio. Dan color verde, morado, naranja o azul al badge del servicio respectivamente.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Añadidas dinámicamente al <span class="attr-name">.badge</span> cuando el servicio es el correspondiente.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">background-color</span>: <span class="css-val">rgba(xxx, 0.1)</span>, <span class="css-prop">color</span>: <span class="css-val">var(--badge-xxx)</span></div>
+                    <div class="info-label">Variantes</div>
+                    <div class="info-value"><span class="attr-name">.badge-limpieza</span> (verde), <span class="attr-name">.badge-ortodoncia</span> (morado), <span class="attr-name">.badge-extraccion</span> (naranja), <span class="attr-name">.badge-evaluacion</span> (azul)</div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Código de color para identificar rápidamente el tipo de servicio de cada cita.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Se aplican junto a <span class="attr-name">.badge</span>. Corresponden con <span class="attr-name">.service-xxx</span> de la misma tarjeta.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="card-actions">
+            <div class="section-header">
+                <span class="tag-badge">.card-actions</span>
+                <span class="section-title">Acciones de la Tarjeta (Editar + Eliminar)</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Contenedor horizontal que agrupa los botones de editar y eliminar con 8px de separación entre ellos.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Lado derecho de cada <span class="attr-name">.appointment-card</span>.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">display</span>: <span class="css-val">flex</span>, <span class="css-prop">gap</span>: <span class="css-val">8px</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Mantiene los botones de acción de cada cita juntos y alineados a la derecha de la tarjeta.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Contiene dos instancias de <span class="attr-name">.btn-icon</span> (editar y eliminar).</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== CATEGORÍA 9: MODAL DE EDICIÓN ==================== -->
+        <div class="category-divider"><h2>✏️ MODAL DE EDICIÓN</h2></div>
+
+        <div class="section-card" id="modal-overlay">
+            <div class="section-header">
+                <span class="tag-badge">.modal-overlay</span>
+                <span class="section-title">Overlay del Modal de Edición</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Capa fija que cubre toda la pantalla con fondo negro semitransparente (60% opacidad) y efecto de desenfoque (blur). Inicialmente invisible (<span class="css-prop">opacity: 0</span>, <span class="css-prop">pointer-events: none</span>). z-index 1000. Cuando tiene la clase <span class="attr-name">.show</span> se vuelve visible y permite interacción.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value"><span class="tag-name">&lt;div id="edit-modal"&gt;</span> al final del body.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">position</span>: <span class="css-val">fixed</span>, <span class="css-prop">top</span>: <span class="css-val">0</span>, <span class="css-prop">left</span>: <span class="css-val">0</span>, <span class="css-prop">right</span>: <span class="css-val">0</span>, <span class="css-prop">bottom</span>: <span class="css-val">0</span>, <span class="css-prop">background-color</span>: <span class="css-val">rgba(15,23,42,0.6)</span>, <span class="css-prop">backdrop-filter</span>: <span class="css-val">blur(4px)</span>, <span class="css-prop">display</span>: <span class="css-val">flex</span>, <span class="css-prop">align-items</span>: <span class="css-val">center</span>, <span class="css-prop">justify-content</span>: <span class="css-val">center</span>, <span class="css-prop">z-index</span>: <span class="css-val">1000</span>, <span class="css-prop">opacity</span>: <span class="css-val">0</span>, <span class="css-prop">pointer-events</span>: <span class="css-val">none</span></div>
+                    <div class="info-label">Con .show</div>
+                    <div class="info-value"><span class="css-prop">opacity</span>: <span class="css-val">1</span>, <span class="css-prop">pointer-events</span>: <span class="css-val">auto</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Oscurece y desenfoca el fondo para enfocar la atención en el modal de edición. Evita que el usuario interactúe con la página principal mientras edita.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Contiene <span class="attr-name">.modal-container</span>. Se activa con <span class="attr-name">.show</span>. Controlado por JS.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="modal-container">
+            <div class="section-header">
+                <span class="tag-badge">.modal-container</span>
+                <span class="section-title">Caja del Modal de Edición</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Caja blanca del modal de edición con ancho del 90% (máximo 460px), fondo blanco, borde gris, bordes redondeados (12px), padding de 24px, sombra grande. Animación de entrada: aparece desde 20px abajo y escalada 0.95, luego se normaliza.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Dentro de <span class="attr-name">.modal-overlay</span>.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">background-color</span>: <span class="css-val">var(--bg-card)</span>, <span class="css-prop">border</span>: <span class="css-val">1px solid var(--border-color)</span>, <span class="css-prop">border-radius</span>: <span class="css-val">var(--radius-md)</span>, <span class="css-prop">width</span>: <span class="css-val">90%</span>, <span class="css-prop">max-width</span>: <span class="css-val">460px</span>, <span class="css-prop">padding</span>: <span class="css-val">24px</span>, <span class="css-prop">box-shadow</span>: <span class="css-val">var(--shadow-lg)</span>, <span class="css-prop">transform</span>: <span class="css-val">translateY(20px) scale(0.95)</span></div>
+                    <div class="info-label">Con .show</div>
+                    <div class="info-value"><span class="css-prop">transform</span>: <span class="css-val">translateY(0) scale(1)</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Contiene el formulario de edición centrado en pantalla con un tamaño controlado y animación suave.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Contiene <span class="attr-name">.modal-header</span>, <span class="attr-name">.appointment-form</span> (edición) y <span class="attr-name">.modal-footer</span>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="modal-header">
+            <div class="section-header">
+                <span class="tag-badge">.modal-header</span>
+                <span class="section-title">Cabecera del Modal de Edición</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Cabecera del modal de edición con título + icono a la izquierda y botón de cierre a la derecha. Borde inferior divisorio, padding inferior de 14px, margen inferior de 20px.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Parte superior de <span class="attr-name">.modal-container</span>.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">display</span>: <span class="css-val">flex</span>, <span class="css-prop">justify-content</span>: <span class="css-val">space-between</span>, <span class="css-prop">align-items</span>: <span class="css-val">center</span>, <span class="css-prop">border-bottom</span>: <span class="css-val">1px solid var(--border-color)</span>, <span class="css-prop">padding-bottom</span>: <span class="css-val">14px</span>, <span class="css-prop">margin-bottom</span>: <span class="css-val">20px</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Identifica la acción del modal (editar cita) y proporciona el botón de cierre.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Contiene <span class="tag-name">&lt;h3&gt;</span> con SVG icono y <span class="attr-name">.btn-close</span>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="modal-footer">
+            <div class="section-header">
+                <span class="tag-badge">.modal-footer</span>
+                <span class="section-title">Pie del Modal con Botones de Acción</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Pie del modal de edición con dos botones (Cancelar y Actualizar) distribuidos en grid de 2 columnas iguales con 12px de separación. Margen superior de 24px.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Parte inferior del formulario de edición dentro de <span class="attr-name">.modal-container</span>.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">margin-top</span>: <span class="css-val">24px</span>, <span class="css-prop">display</span>: <span class="css-val">grid</span>, <span class="css-prop">grid-template-columns</span>: <span class="css-val">1fr 1fr</span>, <span class="css-prop">gap</span>: <span class="css-val">12px</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Organiza las acciones del modal (cancelar vs. actualizar) de forma equilibrada.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Contiene <span class="attr-name">.btn-secondary</span> (Cancelar) y <span class="attr-name">.btn-primary</span> (Actualizar).</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="show">
+            <div class="section-header">
+                <span class="tag-badge">.show</span>
+                <span class="section-title">Clase de Activación de Visibilidad</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Clase de activación que hace visibles los overlays de modal y confirmación. Cambia la opacidad a 1 y habilita los eventos de puntero. También activa la animación de entrada del contenedor interno.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Se añade dinámicamente por JS a <span class="attr-name">.modal-overlay</span> y <span class="attr-name">.confirm-modal-overlay</span>.</div>
+                    <div class="info-label">Propiedades (overlay)</div>
+                    <div class="info-value"><span class="css-prop">opacity</span>: <span class="css-val">1</span>, <span class="css-prop">pointer-events</span>: <span class="css-val">auto</span></div>
+                    <div class="info-label">Propiedades (contenedor)</div>
+                    <div class="info-value"><span class="css-prop">transform</span>: <span class="css-val">translateY(0) scale(1)</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Permite mostrar/ocultar modales mediante JavaScript simplemente añadiendo/eliminando una clase, aprovechando las transiciones CSS.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Se aplica sobre <span class="attr-name">.modal-overlay</span> y <span class="attr-name">.confirm-modal-overlay</span>. Controlada por JS.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== CATEGORÍA 10: TOASTS ==================== -->
+        <div class="category-divider"><h2>🔔 TOASTS Y NOTIFICACIONES</h2></div>
+
+        <div class="section-card" id="toast-container">
+            <div class="section-header">
+                <span class="tag-badge">.toast-container</span>
+                <span class="section-title">Contenedor de Notificaciones Toast</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Contenedor fijo en la esquina inferior derecha de la pantalla (bottom: 24px, right: 24px). Apila los toasts verticalmente con 8px de separación. z-index 2000 (encima de TODO, incluso del diálogo de confirmación). <span class="css-prop">pointer-events: none</span> en el contenedor para no bloquear clics, pero <span class="css-prop">pointer-events: auto</span> en cada toast.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value"><span class="tag-name">&lt;div id="toast-container"&gt;</span> al final del body.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">position</span>: <span class="css-val">fixed</span>, <span class="css-prop">bottom</span>: <span class="css-val">24px</span>, <span class="css-prop">right</span>: <span class="css-val">24px</span>, <span class="css-prop">display</span>: <span class="css-val">flex</span>, <span class="css-prop">flex-direction</span>: <span class="css-val">column</span>, <span class="css-prop">gap</span>: <span class="css-val">8px</span>, <span class="css-prop">z-index</span>: <span class="css-val">2000</span>, <span class="css-prop">pointer-events</span>: <span class="css-val">none</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Muestra notificaciones temporales sin interrumpir la interacción con la página principal. El z-index más alto asegura que siempre sean visibles.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Contiene instancias dinámicas de <span class="attr-name">.toast</span>. Controlado por JS vía <span class="attr-name">#toast-container</span>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="toast">
+            <div class="section-header">
+                <span class="tag-badge">.toast</span>
+                <span class="section-title">Notificación Toast Individual</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Notificación individual que aparece en la esquina inferior derecha. Fondo blanco, borde gris, borde izquierdo de 4px de color (por defecto teal), bordes redondeados, padding de 12px arriba/abajo y 16px a los lados. Sombra grande. Contiene icono + mensaje. Ancho mínimo 280px, máximo 400px. Animación de entrada desde abajo.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Inyectado dinámicamente por app.js dentro de <span class="attr-name">.toast-container</span>.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">pointer-events</span>: <span class="css-val">auto</span>, <span class="css-prop">background-color</span>: <span class="css-val">var(--bg-card)</span>, <span class="css-prop">border</span>: <span class="css-val">1px solid var(--border-color)</span>, <span class="css-prop">border-left</span>: <span class="css-val">4px solid var(--primary)</span>, <span class="css-prop">border-radius</span>: <span class="css-val">var(--radius-sm)</span>, <span class="css-prop">padding</span>: <span class="css-val">12px 16px</span>, <span class="css-prop">box-shadow</span>: <span class="css-val">var(--shadow-lg)</span>, <span class="css-prop">display</span>: <span class="css-val">flex</span>, <span class="css-prop">align-items</span>: <span class="css-val">center</span>, <span class="css-prop">gap</span>: <span class="css-val">12px</span>, <span class="css-prop">min-width</span>: <span class="css-val">280px</span>, <span class="css-prop">max-width</span>: <span class="css-val">400px</span>, <span class="css-prop">animation</span>: <span class="css-val">toast-in 0.3s cubic-bezier(0.16,1,0.3,1) forwards</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Feedback no intrusivo de acciones (cita guardada, cita eliminada, error, advertencia). Aparece sin interrumpir la interfaz y desaparece automáticamente.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Contiene <span class="attr-name">.toast-icon</span> y <span class="attr-name">.toast-message</span>. Puede tener <span class="attr-name">.toast-success</span>, <span class="attr-name">.toast-error</span> o <span class="attr-name">.toast-warning</span> para el color. Se elimina con <span class="attr-name">.dismissing</span>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="toast-message">
+            <div class="section-header">
+                <span class="tag-badge">.toast-message</span>
+                <span class="section-title">Texto de la Notificación</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Texto de la notificación. Tamaño 13px, negrita (600), color de texto principal.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">A la derecha del <span class="attr-name">.toast-icon</span> dentro de cada <span class="attr-name">.toast</span>.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">font-size</span>: <span class="css-val">13px</span>, <span class="css-prop">font-weight</span>: <span class="css-val">600</span>, <span class="css-prop">color</span>: <span class="css-val">var(--text-main)</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Muestra el mensaje descriptivo de la notificación (ej: "Cita guardada exitosamente").</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Dentro de <span class="attr-name">.toast</span>. Inyectado dinámicamente por JS.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="toast-icon">
+            <div class="section-header">
+                <span class="tag-badge">.toast-icon</span>
+                <span class="section-title">Icono de la Notificación</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Contenedor del icono dentro del toast, centrado vertical y horizontalmente. El icono SVG tiene 18px de tamaño.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">A la izquierda del <span class="attr-name">.toast-message</span> dentro de cada <span class="attr-name">.toast</span>.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">display</span>: <span class="css-val">flex</span>, <span class="css-prop">align-items</span>: <span class="css-val">center</span>, <span class="css-prop">justify-content</span>: <span class="css-val">center</span>; SVG dentro: <span class="css-prop">width</span>: <span class="css-val">18px</span>, <span class="css-prop">height</span>: <span class="css-val">18px</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Muestra un icono visual (check, X, warning) que identifica rápidamente el tipo de notificación.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Dentro de <span class="attr-name">.toast</span>. Su color cambia con <span class="attr-name">.toast-success</span>, <span class="attr-name">.toast-error</span> o <span class="attr-name">.toast-warning</span>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="toast-success">
+            <div class="section-header">
+                <span class="tag-badge">.toast-success / .toast-error / .toast-warning</span>
+                <span class="section-title">Modificadores de Color de Toast</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Modificadores que cambian el borde izquierdo y el icono a verde, rojo o ámbar respectivamente.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Añadidas dinámicamente al <span class="attr-name">.toast</span> según el tipo de notificación.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">border-left-color</span>: <span class="css-val">var(--success/error/warning)</span>; <span class="css-prop">.toast-icon</span> { <span class="css-prop">color</span>: <span class="css-val">var(--success/error/warning)</span> }</div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Código de colores para diferenciar tipos de notificación: éxito (verde), error (rojo), advertencia (ámbar).</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Se aplican junto a <span class="attr-name">.toast</span>. Añadidas por JS.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="dismissing">
+            <div class="section-header">
+                <span class="tag-badge">.dismissing</span>
+                <span class="section-title">Animación de Salida del Toast</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Clase que se añade dinámicamente a un <span class="attr-name">.toast</span> antes de eliminarlo. Hace que la notificación se desvanezca (<span class="css-prop">opacity: 0</span>) y se deslice hacia la derecha (<span class="css-prop">translateX: 100px</span>).</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Añadida por app.js a un <span class="attr-name">.toast</span> antes de removerlo del DOM.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">opacity</span>: <span class="css-val">0</span>, <span class="css-prop">transform</span>: <span class="css-val">translateX(100px)</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Proporciona una animación de salida suave para las notificaciones, en lugar de desaparecer abruptamente.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Se aplica sobre <span class="attr-name">.toast</span>. Controlada por JS.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== CATEGORÍA 11: DIÁLOGO DE CONFIRMACIÓN ==================== -->
+        <div class="category-divider"><h2>⚠️ DIÁLOGO DE CONFIRMACIÓN</h2></div>
+
+        <div class="section-card" id="confirm-modal-overlay">
+            <div class="section-header">
+                <span class="tag-badge">.confirm-modal-overlay</span>
+                <span class="section-title">Overlay del Diálogo de Confirmación</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Capa fija que cubre toda la pantalla con fondo negro semitransparente (60% opacidad) y efecto de desenfoque (blur). Inicialmente invisible. z-index 1500 (mayor que el modal de edición que tiene 1000). Cuando tiene <span class="attr-name">.show</span> se vuelve visible.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value"><span class="tag-name">&lt;div id="confirm-modal"&gt;</span> al final del body.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">position</span>: <span class="css-val">fixed</span>, <span class="css-prop">top</span>: <span class="css-val">0</span>, <span class="css-prop">left</span>: <span class="css-val">0</span>, <span class="css-prop">right</span>: <span class="css-val">0</span>, <span class="css-prop">bottom</span>: <span class="css-val">0</span>, <span class="css-prop">background-color</span>: <span class="css-val">rgba(15,23,42,0.6)</span>, <span class="css-prop">backdrop-filter</span>: <span class="css-val">blur(4px)</span>, <span class="css-prop">display</span>: <span class="css-val">flex</span>, <span class="css-prop">align-items</span>: <span class="css-val">center</span>, <span class="css-prop">justify-content</span>: <span class="css-val">center</span>, <span class="css-prop">z-index</span>: <span class="css-val">1500</span>, <span class="css-prop">opacity</span>: <span class="css-val">0</span>, <span class="css-prop">pointer-events</span>: <span class="css-val">none</span></div>
+                    <div class="info-label">Con .show</div>
+                    <div class="info-value"><span class="css-prop">opacity</span>: <span class="css-val">1</span>, <span class="css-prop">pointer-events</span>: <span class="css-val">auto</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Asegura que el diálogo de confirmación esté SIEMPRE por encima de todo, incluso del modal de edición. El desenfoque enfoca la atención en la decisión.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Contiene <span class="attr-name">.confirm-container</span>. Se activa con clase <span class="attr-name">.show</span>. Controlado por JS.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="confirm-container">
+            <div class="section-header">
+                <span class="tag-badge">.confirm-container</span>
+                <span class="section-title">Caja del Diálogo de Confirmación</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Caja centrada del diálogo de confirmación con ancho máximo de 380px, fondo blanco, borde, sombra grande, bordes redondeados. Texto centrado. Animación de entrada desde abajo.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Dentro de <span class="attr-name">.confirm-modal-overlay</span>.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">background-color</span>: <span class="css-val">var(--bg-card)</span>, <span class="css-prop">border</span>: <span class="css-val">1px solid var(--border-color)</span>, <span class="css-prop">border-radius</span>: <span class="css-val">var(--radius-md)</span>, <span class="css-prop">width</span>: <span class="css-val">90%</span>, <span class="css-prop">max-width</span>: <span class="css-val">380px</span>, <span class="css-prop">padding</span>: <span class="css-val">20px</span>, <span class="css-prop">box-shadow</span>: <span class="css-val">var(--shadow-lg)</span>, <span class="css-prop">transform</span>: <span class="css-val">translateY(20px) scale(0.95)</span>, <span class="css-prop">text-align</span>: <span class="css-val">center</span></div>
+                    <div class="info-label">Con .show</div>
+                    <div class="info-value"><span class="css-prop">transform</span>: <span class="css-val">translateY(0) scale(1)</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Contiene el mensaje de confirmación con diseño centrado y animación suave.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Contiene <span class="attr-name">.confirm-icon-box</span>, <span class="attr-name">.confirm-title</span>, <span class="attr-name">.confirm-text</span> y <span class="attr-name">.confirm-actions</span>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="confirm-icon-box">
+            <div class="section-header">
+                <span class="tag-badge">.confirm-icon-box</span>
+                <span class="section-title">Icono de Alerta Rojo en Diálogo</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Círculo de 48px con fondo rojo claro e icono de alerta rojo. Centrado horizontalmente con margen inferior de 16px.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Parte superior de <span class="attr-name">.confirm-container</span>.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">width</span>: <span class="css-val">48px</span>, <span class="css-prop">height</span>: <span class="css-val">48px</span>, <span class="css-prop">background-color</span>: <span class="css-val">var(--error-light)</span>, <span class="css-prop">color</span>: <span class="css-val">var(--error)</span>, <span class="css-prop">border-radius</span>: <span class="css-val">50%</span>, <span class="css-prop">display</span>: <span class="css-val">flex</span>, <span class="css-prop">align-items</span>: <span class="css-val">center</span>, <span class="css-prop">justify-content</span>: <span class="css-val">center</span>, <span class="css-prop">margin</span>: <span class="css-val">0 auto 16px</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Alerta visual inmediata de que se trata de una acción destructiva o irreversible.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Dentro de <span class="attr-name">.confirm-container</span>. Contiene un SVG icono de alerta.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="confirm-title">
+            <div class="section-header">
+                <span class="tag-badge">.confirm-title</span>
+                <span class="section-title">Título del Diálogo de Confirmación</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Título del diálogo de confirmación en 16px, negrita, color de texto principal, centrado, con margen inferior de 8px. Ejemplo: "¿Eliminar esta cita?"</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Debajo de <span class="attr-name">.confirm-icon-box</span> en <span class="attr-name">.confirm-container</span>.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">font-size</span>: <span class="css-val">16px</span>, <span class="css-prop">font-weight</span>: <span class="css-val">700</span>, <span class="css-prop">color</span>: <span class="css-val">var(--text-main)</span>, <span class="css-prop">margin-bottom</span>: <span class="css-val">8px</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Hace la pregunta explícita al usuario de forma destacada.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Dentro de <span class="attr-name">.confirm-container</span>. Controlado por JS vía <span class="attr-name">#confirm-title</span>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="confirm-text">
+            <div class="section-header">
+                <span class="tag-badge">.confirm-text</span>
+                <span class="section-title">Texto de Consecuencia del Diálogo</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Texto descriptivo en 13px, color gris, centrado, con margen inferior de 20px. Explica la consecuencia de la acción destructiva.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Debajo de <span class="attr-name">.confirm-title</span> en <span class="attr-name">.confirm-container</span>.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">font-size</span>: <span class="css-val">13px</span>, <span class="css-prop">color</span>: <span class="css-val">var(--text-muted)</span>, <span class="css-prop">margin-bottom</span>: <span class="css-val">20px</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Informa al usuario de que la acción es irreversible y los datos se perderán.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Dentro de <span class="attr-name">.confirm-container</span>. Controlado por JS vía <span class="attr-name">#confirm-description</span>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="confirm-actions">
+            <div class="section-header">
+                <span class="tag-badge">.confirm-actions</span>
+                <span class="section-title">Grid de Acciones del Diálogo</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Grid de 2 columnas iguales que distribuye los botones "Cancelar" y "Eliminar" en el diálogo de confirmación.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Parte inferior de <span class="attr-name">.confirm-container</span>.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">display</span>: <span class="css-val">grid</span>, <span class="css-prop">grid-template-columns</span>: <span class="css-val">1fr 1fr</span>, <span class="css-prop">gap</span>: <span class="css-val">12px</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Organiza las dos opciones de respuesta (cancelar o confirmar) de forma equilibrada.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Contiene <span class="attr-name">.btn-secondary</span> (Cancelar) y <span class="attr-name">.btn-danger</span> (Eliminar).</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== CATEGORÍA 12: ESTADOS Y VALIDACIÓN ==================== -->
+        <div class="category-divider"><h2>📌 ESTADOS Y VALIDACIÓN</h2></div>
+
+        <div class="section-card" id="empty-state">
+            <div class="section-header">
+                <span class="tag-badge">.empty-state</span>
+                <span class="section-title">Estado Visual Sin Citas Registradas</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Estado visual que se muestra cuando no hay citas registradas. Borde punteado gris (2px dashed), texto centrado, padding grande (48px arriba/abajo), bordes redondeados.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Se muestra dentro de <span class="attr-name">#lista-citas</span> cuando el array de citas está vacío.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">text-align</span>: <span class="css-val">center</span>, <span class="css-prop">padding</span>: <span class="css-val">48px 24px</span>, <span class="css-prop">border</span>: <span class="css-val">2px dashed var(--border-color)</span>, <span class="css-prop">border-radius</span>: <span class="css-val">var(--radius-md)</span>, <span class="css-prop">display</span>: <span class="css-val">flex</span>, <span class="css-prop">flex-direction</span>: <span class="css-val">column</span>, <span class="css-prop">align-items</span>: <span class="css-val">center</span>, <span class="css-prop">gap</span>: <span class="css-val">16px</span>, <span class="css-prop">color</span>: <span class="css-val">var(--text-muted)</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Informa amigablemente al usuario que la lista está vacía, en lugar de mostrar un espacio en blanco. El borde punteado sugiere que es un área "por llenar".</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Contiene <span class="attr-name">.empty-state-icon</span>, un <span class="tag-name">&lt;h3&gt;</span> y un <span class="tag-name">&lt;p&gt;</span>. Se alterna con <span class="attr-name">.appointment-card</span> según haya citas.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="empty-state-icon">
+            <div class="section-header">
+                <span class="tag-badge">.empty-state-icon</span>
+                <span class="section-title">Icono del Estado Vacío</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Círculo de 64px con fondo verde claro (<span class="attr-name">.primary-light</span>) y icono SVG teal de 32px. Centrado dentro del estado vacío.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value">Dentro de <span class="attr-name">.empty-state</span>.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">width</span>: <span class="css-val">64px</span>, <span class="css-prop">height</span>: <span class="css-val">64px</span>, <span class="css-prop">background-color</span>: <span class="css-val">var(--primary-light)</span>, <span class="css-prop">border-radius</span>: <span class="css-val">50%</span>, <span class="css-prop">display</span>: <span class="css-val">flex</span>, <span class="css-prop">align-items</span>: <span class="css-val">center</span>, <span class="css-prop">justify-content</span>: <span class="css-val">center</span>, <span class="css-prop">color</span>: <span class="css-val">var(--primary)</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Icono decorativo que hace el estado vacío más amigable y visualmente atractivo.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Dentro de <span class="attr-name">.empty-state</span>. Contiene un SVG icono.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== CATEGORÍA 13: PIE DE PÁGINA ==================== -->
+        <div class="category-divider"><h2>📌 PIE DE PÁGINA</h2></div>
+
+        <div class="section-card" id="main-footer">
+            <div class="section-header">
+                <span class="tag-badge">.main-footer</span>
+                <span class="section-title">Pie de Página con Copyright y Créditos</span>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-label">¿Qué hace?</div>
+                    <div class="info-value">Pie de página con borde superior gris, padding de 16px arriba/abajo y 24px a los lados, texto centrado, tamaño 12px, color gris atenuado, fondo blanco. <span class="css-prop">margin-top: auto</span> lo empuja al final del contenedor.</div>
+                    <div class="info-label">¿Dónde?</div>
+                    <div class="info-value"><span class="tag-name">&lt;footer&gt;</span> al final de <span class="attr-name">.app-container</span>.</div>
+                    <div class="info-label">Propiedades clave</div>
+                    <div class="info-value"><span class="css-prop">border-top</span>: <span class="css-val">1px solid var(--border-color)</span>, <span class="css-prop">padding</span>: <span class="css-val">16px 24px</span>, <span class="css-prop">text-align</span>: <span class="css-val">center</span>, <span class="css-prop">font-size</span>: <span class="css-val">12px</span>, <span class="css-prop">color</span>: <span class="css-val">var(--text-muted)</span>, <span class="css-prop">background-color</span>: <span class="css-val">var(--bg-card)</span>, <span class="css-prop">margin-top</span>: <span class="css-val">auto</span></div>
+                    <div class="info-label">¿Por qué?</div>
+                    <div class="info-value">Muestra información de copyright y créditos sin distraer del contenido principal. El margin-top: auto asegura que siempre esté al final de la página.</div>
+                    <div class="info-label">Relaciones</div>
+                    <div class="info-value">Es el último elemento dentro de <span class="attr-name">.app-container</span>.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== RESUMEN POR CATEGORÍAS ==================== -->
+        <div class="category-divider"><h2>📊 RESUMEN POR CATEGORÍAS</h2></div>
+
+        <div class="section-card" style="border-left: 4px solid var(--primary);">
+            <div class="section-body">
+                <h3 style="color: var(--primary); margin-bottom: 16px; font-size: 1.1rem;">🏗️ Contenedores Layout (5 clases)</h3>
+                <ul class="summary-list">
+                    <li><strong>.app-container</strong> — Marco principal de la app</li>
+                    <li><strong>.main-grid</strong> — Grid de 2 columnas (formulario + lista)</li>
+                    <li><strong>.panel-card</strong> — Tarjeta contenedora reutilizable</li>
+                    <li><strong>.appointments-container</strong> — Lista vertical de citas</li>
+                    <li><strong>.stats-grid</strong> — Grid responsivo de estadísticas</li>
+                </ul>
+
+                <h3 style="color: var(--primary); margin: 24px 0 16px; font-size: 1.1rem;">🏥 Cabecera y Branding (7 clases)</h3>
+                <ul class="summary-list">
+                    <li><strong>.main-header</strong> — Barra superior</li>
+                    <li><strong>.brand-section</strong> — Logo + título</li>
+                    <li><strong>.logo-container</strong> — Caja del logo con degradado</li>
+                    <li><strong>.header-title-group</strong> — Título y subtítulo</li>
+                    <li><strong>.controls-section</strong> — Controles (estado + tema)</li>
+                    <li><strong>.status-indicator</strong> — Badge "Sistema Local"</li>
+                    <li><strong>.status-dot</strong> — Puntito pulsante</li>
+                    <li><strong>.theme-toggle</strong> — Botón de cambio de tema</li>
+                    <li><strong>.icon-sun</strong> — Icono de sol</li>
+                    <li><strong>.icon-moon</strong> — Icono de luna</li>
+                </ul>
+
+                <h3 style="color: var(--primary); margin: 24px 0 16px; font-size: 1.1rem;">📊 Estadísticas (7 clases)</h3>
+                <ul class="summary-list">
+                    <li><strong>.stat-card</strong> — Tarjeta de métrica</li>
+                    <li><strong>.stat-info</strong> — Info de la métrica</li>
+                    <li><strong>.stat-label</strong> — Etiqueta descriptiva</li>
+                    <li><strong>.stat-value</strong> — Valor numérico</li>
+                    <li><strong>.stat-icon-wrapper</strong> — Caja del icono</li>
+                    <li><strong>.stat-total, .stat-hoy, .stat-proximas, .stat-popular</strong> — Colores temáticos</li>
+                </ul>
+
+                <h3 style="color: var(--primary); margin: 24px 0 16px; font-size: 1.1rem;">📝 Formularios (4 clases)</h3>
+                <ul class="summary-list">
+                    <li><strong>.appointment-form</strong> — Layout del formulario</li>
+                    <li><strong>.form-group</strong> — Grupo label + input</li>
+                    <li><strong>.input-container</strong> — Contenedor con icono</li>
+                    <li><strong>.form-input</strong> — Estilo de inputs</li>
+                </ul>
+
+                <h3 style="color: var(--primary); margin: 24px 0 16px; font-size: 1.1rem;">🔘 Botones (9 clases)</h3>
+                <ul class="summary-list">
+                    <li><strong>.btn-primary</strong> — Botón principal (guardar/actualizar)</li>
+                    <li><strong>.btn-secondary</strong> — Botón secundario base</li>
+                    <li><strong>.btn-export</strong> — Exportar CSV (verde)</li>
+                    <li><strong>.btn-danger-outline</strong> — Limpiar todo (rojo outline)</li>
+                    <li><strong>.btn-danger</strong> — Confirmar eliminación (rojo sólido)</li>
+                    <li><strong>.btn-icon</strong> — Botón icono cuadrado</li>
+                    <li><strong>.btn-icon-edit</strong> — Hover editar</li>
+                    <li><strong>.btn-icon-delete</strong> — Hover eliminar</li>
+                    <li><strong>.btn-close</strong> — Cerrar modal</li>
+                </ul>
+
+                <h3 style="color: var(--primary); margin: 24px 0 16px; font-size: 1.1rem;">📋 Tarjetas de Citas (10 clases)</h3>
+                <ul class="summary-list">
+                    <li><strong>.appointment-card</strong> — Tarjeta de cita</li>
+                    <li><strong>.card-info</strong> — Información de la cita</li>
+                    <li><strong>.patient-name</strong> — Nombre del paciente</li>
+                    <li><strong>.card-details</strong> — Detalles (fecha, hora, servicio)</li>
+                    <li><strong>.detail-item</strong> — Item individual con icono</li>
+                    <li><strong>.badge</strong> — Etiqueta de servicio</li>
+                    <li><strong>.badge-limpieza, .badge-ortodoncia, .badge-extraccion, .badge-evaluacion</strong> — Colores</li>
+                    <li><strong>.card-actions</strong> — Botones de acción</li>
+                    <li><strong>.service-limpieza, .service-ortodoncia, .service-extraccion, .service-evaluacion</strong> — Barra lateral</li>
+                </ul>
+
+                <h3 style="color: var(--primary); margin: 24px 0 16px; font-size: 1.1rem;">✏️ Modales (5 clases)</h3>
+                <ul class="summary-list">
+                    <li><strong>.modal-overlay / .confirm-modal-overlay</strong> — Capa oscura</li>
+                    <li><strong>.modal-container / .confirm-container</strong> — Caja del modal</li>
+                    <li><strong>.modal-header / .modal-footer</strong> — Cabecera y pie</li>
+                    <li><strong>.show</strong> — Activación de visibilidad</li>
+                </ul>
+
+                <h3 style="color: var(--primary); margin: 24px 0 16px; font-size: 1.1rem;">🔔 Toasts (6 clases)</h3>
+                <ul class="summary-list">
+                    <li><strong>.toast-container</strong> — Contenedor fijo</li>
+                    <li><strong>.toast</strong> — Notificación individual</li>
+                    <li><strong>.toast-message</strong> — Texto</li>
+                    <li><strong>.toast-icon</strong> — Icono</li>
+                    <li><strong>.toast-success, .toast-error, .toast-warning</strong> — Colores</li>
+                    <li><strong>.dismissing</strong> — Animación de salida</li>
+                </ul>
+
+                <h3 style="color: var(--primary); margin: 24px 0 16px; font-size: 1.1rem;">⚠️ Confirmación (4 clases)</h3>
+                <ul class="summary-list">
+                    <li><strong>.confirm-icon-box</strong> — Icono de alerta</li>
+                    <li><strong>.confirm-title</strong> — Título</li>
+                    <li><strong>.confirm-text</strong> — Descripción</li>
+                    <li><strong>.confirm-actions</strong> — Botones</li>
+                </ul>
+
+                <h3 style="color: var(--primary); margin: 24px 0 16px; font-size: 1.1rem;">📌 Validación y Estados (3 clases)</h3>
+                <ul class="summary-list">
+                    <li><strong>.validation-hint</strong> — Mensaje de validación</li>
+                    <li><strong>.warning</strong> — Color ámbar para advertencias</li>
+                    <li><strong>.empty-state</strong> — Estado sin citas</li>
+                    <li><strong>.empty-state-icon</strong> — Icono del estado vacío</li>
+                </ul>
+
+                <h3 style="color: var(--primary); margin: 24px 0 16px; font-size: 1.1rem;">🔍 Búsqueda y Filtros (3 clases)</h3>
+                <ul class="summary-list">
+                    <li><strong>.filter-actions-bar</strong> — Barra de herramientas</li>
+                    <li><strong>.search-wrapper</strong> — Contenedor del buscador</li>
+                    <li><strong>.action-buttons-group</strong> — Grupo de botones de acción</li>
+                </ul>
+
+                <h3 style="color: var(--primary); margin: 24px 0 16px; font-size: 1.1rem;">📌 Pie de Página (1 clase)</h3>
+                <ul class="summary-list">
+                    <li><strong>.main-footer</strong> — Footer con copyright</li>
+                </ul>
+
+                <div class="highlight-box" style="margin-top: 24px;">
+                    <strong>📈 Total de clases CSS documentadas: 80/80</strong><br>
+                    Documento generado el 22 de junio de 2026
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
